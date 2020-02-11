@@ -630,15 +630,6 @@
         <key>slurl_base</key>
             <string>hop://hypergrid.org:8002/</string>
         </map>
-    <key>inworldz.com:8002</key>
-        <map>
-        <key>LastModified</key>
-            <date>2018-08-23T21:00:00.00Z</date>
-        <key>DEPRECATED</key>
-            <string>TRUE</string>
-        <key>name</key>
-            <string>inworldz.com:8002</string>
-        </map>
     <key>islandoasisgrid.biz:8002</key>
         <map>
         <key>LastModified</key>
@@ -739,22 +730,6 @@
         <key>slurl_base</key>
             <string>hop://localhost:9000/</string>
         </map>
-    <key>login.aurorascape.com:8002</key>
-        <map>
-        <key>DEPRECATED</key>
-            <string>TRUE</string>
-        <key>name</key>
-            <string>login.aurorascape.com:8002</string>
-        </map>
-    <key>login.avination.com/</key>
-        <map>
-        <key>DEPRECATED</key>
-            <string>TRUE</string>
-        <key>name</key>
-            <string>login.avination.com/</string>
-        <key>LastModified</key>
-            <date>2018-02-28T15:36:26.43Z</date>
-        </map>
     <key>login.francogrid.org:80</key>
         <map>
         <key>LastModified</key>
@@ -790,13 +765,6 @@
             <string>http://francogrid.org/user/register</string>
         <key>slurl_base</key>
             <string>hop://login.francogrid.org:80/</string>
-        </map>
-    <key>login.danger.osgrid.org</key>
-        <map>
-        <key>DEPRECATED</key>
-            <string>TRUE</string>
-        <key>name</key>
-            <string>login.danger.osgrid.org</string>
         </map>
     <key>login.osgrid.org</key>
         <map>
@@ -949,13 +917,6 @@
             <string>https://agalaxybeyond.com/register</string>
         <key>slurl_base</key>
             <string>hop://grid.secondgalaxy.com:8002/</string>
-        </map>
-    <key>reactiongrid.com:8008</key>
-        <map>
-        <key>DEPRECATED</key>
-            <string>TRUE</string>
-        <key>name</key>
-            <string>reactiongrid.com:8008</string>
         </map>
     <key>util.aditi.lindenlab.com</key>
         <map>
