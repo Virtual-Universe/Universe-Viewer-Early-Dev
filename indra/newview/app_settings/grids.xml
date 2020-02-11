@@ -914,6 +914,42 @@
         <key>slurl_base</key>
             <string>hop://grid.kitely.com:8002/</string>
         </map>
+	<key>grid.secondgalaxy.com:8002</key>
+        <map>
+        <key>LastModified</key>
+            <date>2020-02-11T21:02:57.68Z</date>
+        <key>about</key>
+            <string>https://agalaxybeyond.com/about</string>
+        <key>gridname</key>
+            <string>A Galaxy Beyond</string>
+        <key>gridnick</key>
+            <string>AGB</string>
+        <key>help</key>
+            <string>https://agalaxybeyond.com/help</string>
+        <key>helperuri</key>
+            <string>https://agalaxybeyond.com/economy</string>
+        <key>login_identifier_types</key>
+            <array>
+                <string>agent</string>
+                <string>account</string>
+            </array>
+        <key>loginpage</key>
+            <string>https://agalaxybeyond.com/welcome</string>
+        <key>loginuri</key>
+            <array>
+                <string>http://grid.secondgalaxy.com:8002/</string>
+            </array>
+        <key>name</key>
+            <string>grid.secondgalaxy.com:8002</string>
+        <key>password</key>
+            <string>https://agalaxybeyond.com/password</string>
+        <key>platform</key>
+            <string>OpenSim</string>
+        <key>register</key>
+            <string>https://agalaxybeyond.com/register</string>
+        <key>slurl_base</key>
+            <string>hop://grid.secondgalaxy.com:8002/</string>
+        </map>
     <key>reactiongrid.com:8008</key>
         <map>
         <key>DEPRECATED</key>
