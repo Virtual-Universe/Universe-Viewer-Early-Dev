@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<panel label="文字聊天" name="chat">
+	<text name="font_size">
+		字型尺寸：
+	</text>
+	<radio_group name="chat_font_size">
+		<radio_item label="小" name="radio" value="0"/>
+		<radio_item label="中" name="radio2" value="1"/>
+		<radio_item label="大" name="radio3" value="2"/>
+	</radio_group>
+	<check_box initial_value="true" label="聊天時播放打字動作" name="play_typing_animation"/>
+	<check_box label="當我離線時將收到的 IM 訊息郵寄給我 （[EMAIL]）" name="send_im_to_email"/>
+	<check_box label="啟用純本文 IM 與聊天歷史紀錄" name="plain_text_chat_history"/>
+	<check_box label="聊天泡泡" name="bubble_text_chat"/>
+	<text name="show_ims_in_label">
+		顯示 IMs 於：
+	</text>
+	<text name="requires_restart_label">
+		（須重新啟動）
+	</text>
+	<radio_group name="chat_window" tool_tip="顯示你的即時訊息在分開的浮動視窗，或是使用很多頁籤的單一浮動視窗（須重新啟動）">
+		<radio_item label="分開視窗" name="radio" value="0"/>
+		<radio_item label="頁籤" name="radio2" value="1"/>
+	</radio_group>
+	<text name="disable_toast_label">
+		啟用傳入聊天的突顯示視窗：
+	</text>
+	<check_box label="群組聊天" name="EnableGroupChatPopups" tool_tip="當群組聊天訊息抵達時查看突顯式視窗"/>
+	<check_box label="IM 聊天" name="EnableIMChatPopups" tool_tip="當即時訊息抵達時查看突顯式視窗"/>
+	<spinner label="附近聊天內容提示框停駐時間：" name="nearby_toasts_lifetime"/>
+	<spinner label="附近聊天內容提示框消退時間：" name="nearby_toasts_fadingtime"/>
+	<button label="翻譯…" name="ok_btn"/>
+	<button label="自動取代…" name="autoreplace_showgui"/>
+	<button label="拼字檢查…" name="spellcheck_showgui"/>
+</panel>

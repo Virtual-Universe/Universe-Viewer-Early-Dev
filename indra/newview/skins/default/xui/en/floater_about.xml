@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<floater
+ positioning="centered"
+ legacy_header_height="18"
+ height="600"
+ layout="topleft"
+ name="floater_about"
+ help_topic="floater_about"
+ save_rect="true"
+ title="About [CAPITALIZED_APP_NAME]"
+ width="500">
+  <floater.string
+     name="AboutHeader">
+[APP_NAME] [VIEWER_VERSION_0].[VIEWER_VERSION_1].[VIEWER_VERSION_2] ([VIEWER_VERSION_3]) [BUILD_DATE] [BUILD_TIME] ([CHANNEL]) [BUILD_TYPE]
+
+</floater.string>
+  <floater.string
+     name="AboutCompiler">
+Built with [COMPILER] version [COMPILER_VERSION]
+
+</floater.string>
+  <floater.string
+     name="AboutPosition">
+You are at [POSITION_0,number,1], [POSITION_1,number,1], [POSITION_2,number,1] in [REGION] located at &lt;nolink&gt;[HOSTNAME]&lt;/nolink&gt; ([HOSTIP])
+[SERVER_VERSION]
+[SERVER_RELEASE_NOTES_URL]
+
+</floater.string>
+  <!-- *NOTE: Do not translate text like GPU, Graphics Card, etc -
+       Most PC users who know what these mean will be used to the English versions,
+       and this info sometimes gets sent to support. -->
+  <floater.string
+     name="AboutSystem">
+CPU: [CPU]
+Memory: [MEMORY_MB] MB
+OS Version: [OS_VERSION]
+Graphics Card Vendor: [GRAPHICS_CARD_VENDOR]
+Graphics Card: [GRAPHICS_CARD]
+</floater.string>
+  <floater.string
+     name="AboutDriver">
+Windows Graphics Driver Version: [GRAPHICS_DRIVER_VERSION]
+</floater.string>
+  <floater.string
+     name="AboutLibs">
+OpenGL Version: [OPENGL_VERSION]
+
+RestrainedLove API: [RLV_VERSION]
+libcurl Version: [LIBCURL_VERSION]
+J2C Decoder Version: [J2C_VERSION]
+Audio Driver Version: [AUDIO_DRIVER_VERSION]
+Qt Webkit Version: [QT_WEBKIT_VERSION]
+Voice Server Version: [VOICE_VERSION]
+</floater.string>
+  <floater.string
+     name="AboutSettings">
+Settings mode: [MODE]
+Viewer Skin: [SKIN] ([THEME])
+Font Used: [FONT] ([FONT_SCREEN_DPI])
+Draw distance: [DRAW_DISTANCE]
+Bandwidth: [BANDWIDTH]
+LOD factor: [LOD]
+Render quality: [RENDERQUALITY]
+</floater.string>
+  <floater.string
+     name="none">
+      (none)
+  </floater.string>
+  <floater.string
+     name="AboutTraffic">
+Packets Lost: [PACKETS_LOST,number,0]/[PACKETS_IN,number,0] ([PACKETS_PCT,number,1]%)
+</floater.string>
+<floater.string
+     name="ErrorFetchingServerReleaseNotesURL">
+Error fetching server release notes URL.
+</floater.string>
+  <tab_container
+    follows="all" 
+    top="25"
+    left="10"
+    height="565" 
+    width="490" 
+    name="about_tab"
+    tab_position="top">
+    <panel
+      border="true" 
+      label="Info"
+      help_topic="about_support_tab"
+      name="support_panel">
+    <text
+          follows="top|left|right"
+          font="SansSerif"
+          height="40"
+          layout="topleft"
+          left="5"
+          name="support_intro"
+          top="20"
+          width="435"
+          wrap="true">
+For the latest information about Angstrom, visit
+https://bitbucket.org/nhede/angstrom2
+
+    </text>
+      <text_editor
+        parse_urls="true" 
+       follows="top|left"
+       font="SansSerif"
+       height="443"
+       bg_readonly_color="Transparent"
+       left="0"
+       max_length="65536"
+       name="support_editor"
+       top_pad="5"
+       width="435"
+       word_wrap="true" />
+      <button
+        follows="left|top" 
+        label="Copy to Clipboard"
+        name="copy_btn"
+        left="10"
+        top_pad="5"
+        height="25"
+        width="180" />
+    </panel>
+    <panel
+      border="true"
+      label="Linden Lab Credits"
+      help_topic="about_credits_tab"
+      name="credits_panel">
+      <text
+          follows="top|left|right"
+          height="45"
+          layout="topleft"
+          left="5"
+          name="linden_intro"
+          top="10"
+          width="435"
+          wrap="true">
+Angstrom would not be possible without the decision from Linden Lab to make their Second Life viewer source code available.
+
+The Lindens are:
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="178"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="linden_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+Philip, Andrew, Doug, Richard, Phoenix, Ian, Mark, Robin, Dan, Char, Ryan, Eric, Jim, Lee, Jeff, Michael, Kelly, Steve, Catherine, Bub, Ramzi, Jill, Jeska, Don, Kona, Callum, Charity, Jack, Shawn, babbage, James, Lauren, Blue, Brent, Reuben, Pathfinder, Jesse, Patsy, Torley, Bo, Cyn, Jonathan, Gia, Annette, Ginsu, Harry, Lex, Runitai, Guy, Cornelius, Beth, Swiss, Thumper, Wendy, Teeple, Seth, Dee, Mia, Sally, Liana, Aura, Beez, Milo, Red, Gulliver, Marius, Joe, Jose, Dore, Justin, Nora, Morpheus, Lexie, Amber, Chris, Xan, Leyla, Walker, Sabin, Joshua, Hiromi, Tofu, Fritz, June, Jean, Ivy, Dez, Ken, Betsy, Which, Spike, Rob, Zee, Dustin, George, Claudia, del, Matthew, jane, jay, Adrian, Yool, Rika, Yoz, siobhan, Qarl, Benjamin, Beast, Everett, madhavi, Christopher, Izzy, stephany, Jeremy, sean, adreanne, Pramod, Tobin, sejong, Iridium, maurice, kj, Meta, kari, JP, bert, kyle, Jon, Socrates, Bridie, Ivan, maria, Aric, Coco, Periapse, sandy, Storrs, Lotte, Colossus, Brad, Pastrami, Zen, BigPapi, Banzai, Sardonyx, Mani, Garry, Jaime, Neuro, Samuel, Niko, CeeLo, Austin, Soft, Poppy, emma, tessa, angelo, kurz, alexa, Sue, CG, Blake, Erica, Brett, Bevis, kristen, Q, simon, Enus, MJ, laurap, Kip, Scouse, Ron, Ram, kend, Marty, Prospero, melissa, kraft, Nat, Seraph, Hamilton, Lordan, Green, miz, Ashlei, Trinity, Ekim, Echo, Charlie, Rowan, Rome, Jt, Doris, benoc, Christy, Bao, Kate, Tj, Patch, Cheah, Johan, Brandy, Angela, Oreh, Cogsworth, Lan, Mitchell, Space, Bambers, Einstein, Bender, Malbers, Matias, Maggie, Rothman, Milton, Niall, Marin, Allison, Mango, Andrea, Katt, Yi, Ambroff, Rico, Raymond, Gail, Christa, William, Dawn, Usi, Dynamike, M, Corr, Dante, Molly, kaylee, Danica, Kelv, Lil, jacob, Nya, Rodney, elsie, Blondin, Grant, Nyx, Devin, Monty, Minerva, Keira, Katie, Jenn, Makai, Clare, Joy, Cody, Gayathri, FJ, spider, Oskar, Landon, Jarv, Noelle, Al, Doc, Gray, Vir, t, Maestro, Simone, Shannon, yang, Courtney, Scott, charlene, Quixote, Susan, Zed, Amanda, Katelin, Esbee, JoRoan, Enkidu, roxie, Scarlet, Merov, Kevin, Judy, Rand, Newell, Les, Dessie, Galen, Michon, Geo, Siz, Calyle, Pete, Praveen, Callen, Sheldon, Pink, Nelson, jenelle, Terrence, Nathan, Juan, Sascha, Huseby, Karina, Kaye, Kotler, Lis, Darv, Charrell, Dakota, Kimmora, Theeba, Taka, Mae, Perry, Ducot, dana, Esther, Dough, gisele, Doten, Viale, Fisher, jessieann, ashley, Torres, delby, rountree, kurt, Slaton, Madison, Rue, Gino, Wen, Casssandra, Brodesky, Squid, Gez, Rakesh, Gecko, Ladan, Tony, Tatem, Squire, Falcon, BK, Crimp, Tiggs, Bacon, Coyot, Carmilla, Webb, Sea, Arch, Jillian, Jason, Bernard, Vogt, Peggy, dragon, Pup, xandix, Wallace, Bewest, Inoshiro, Rhett, AG, Aimee, Ghengis, Itiaes, Eli, Steffan, Epic, Grapes, Stone, Prep, Scobu, Robert, Alain, Carla, Vicky, Tia, Alec, Taras, Lisa, Oz, Ariane, Log, House, Kazu, Kim, Drofnas, Tyler, Campbell, Michele, Madeline, Nelly, Baron, Thor, Lori, Hele, Fredrik, Teddy, Pixie, Berry, Gabrielle, Alfonso, Brooke, Wolf, Ringo, Cru, Charlar, Rodvik, Gibson, Elise, Bagman, Greger, Leonidas, Jerm, Leslie, CB, Brenda, Durian, Carlo, mm, Zeeshan, Caleb, Max, Elikak, Mercille, Steph, Chase
+      </text_editor>
+      <text
+          follows="top|left"
+          height="10"
+          layout="topleft"
+          left="5"
+          name="contrib_intro"
+          top_pad="10"
+          width="435"
+          wrap="true">
+with open source contributions from:
+      </text>
+      <text_editor
+       enabled="false" 
+       follows="top|left"
+       height="178"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="contrib_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+Lisa Lowe, Hackshaven Harford, Squirrel Wood, Avallyn Oakleaf, Eva Nowicka, Josef Munster, Eva Rau, Kolor Fall, Charles Courtois, UsikuFarasi Kanarik, Dzonatas Sol, 45ms Zhong, Gentle Heron, Cypren Christenson, Gaberoonie Zanzibar, Winter Ventura, Corro Moseley, Mindy Mathy, Bill Walach, Joel Savard, Holger Gilruth, Coaldust Numbers, Scrippy Scofield, Saii Hallard, Alissa Sabre, resu Ampan, Luc Starsider, Mel Vanbeeck, Sasy Scarborough, Mencius Watts, Asaeda Meltingdots, Peter Lameth, Zeja Pyle, Flemming Congrejo, Aeonix Aeon, Dil Spitz, Zak Westminster, Giggles Littlebird, TankMaster Finesmith, Ann Congrejo, blakopal Galicia, Fluf Fredriksson, Ansariel Hiller, TriloByte Zanzibar, Nber Medici, Benjamin Bigdipper, naofan Teardrop, Irene Muni, Samm Larkham, Rich Grainger, Jo Bernandes, RufusTT Horsefly, Larry Pixel, Inma Rau, Horatio Freund, Hikkoshi Sakai, Xellessanova Zenith, xstorm Radek, Tharax Ferraris, Aiko Ying, Sporked Friis, Villain Baroque, Jennifer Boyle, Fiachra Lach, Mo Hax, Newfie Pendragon, Zana Kohime, Still Defiant, Juro Kothari, Matto Destiny, Malarthi Behemoth, Rose Evans, Denim Kamachi, Lillie Cordeaux, Ringo Tuxing, Darien Caldwell, Zai Lynch, bushing Spatula, Marianne McCann, Jessica Qin, Kimar Coba, Jonathan Yap, Soupa Segura, Ryozu Kojima, Orion Delphis, Alexandrea Fride, Argent Stonecutter, Gudmund Shepherd, Korvel Noh, Marc2 Sands, Bulli Schumann, Maccus McCullough, Tayra Dagostino, ST Mensing, Ales Beaumont, Tofu Buzzard, Quantum Destiny, Gentle Welinder, Buckaroo Mu, SignpostMarv Martin, Peekay Semyorka, Tue Torok, Gigs Taggart, Talamasca, Draconis Neurocam, Quicksilver Hermes, Debs Regent, Tony Kembia, Frontera Thor, herina Bode, Tezcatlipoca Bisiani, Sicarius Toxx, Gwyneth Llewelyn, Paula Innis, Sammy Frederix, Westley Streeter, Zi Ree, Edgware Marker, Fremont Cunningham, TraductoresAnonimos Alter, Paul Churchill, Borg Capalini, Robin Cornelius, Josette Windlow, Clara Young, Kitty Barnett, Patric Mills, Cron Stardust, Bezilon Kasei, Tali Rosca, Nounouch Hapmouche, maciek marksman, Psi Merlin, Drew Dri, Templar Merlin, Carjay McGinnis, Maggie Darwin, Charlie Sazaland, FreeSL Aeon, Neutron Chesnokov, Vixen Heron, Evangelista Emerald, gwampa Lomu, Hatzfeld Runo, Zarkonnen Decosta, Ken Lavender, Veritas Raymaker, Techwolf Lupindo, Blakar Ogre, Wundur Primbee, Hoze Menges, Magnus Balczo, McCabe Maxsted, Dirk, Parvati Silverweb, EponymousDylan Ra, Farallon Greyskin, Starshine Halasy, Gypsy Tripsa, Coughdrop Littlething, Sergen Davies, Cap Carver, Satanello Miami, PeterPunk Mooney, Imnotgoing Sideways, Mourna Biziou, Vixie Durant, Drewan Keats, Komiko Okamoto, Drew Dwi, Adeon Writer, Aleric Inglewood, Orenj Marat, Khyota Wulluf, Annie Milestone, TBBle Kurosawa, Keklily Longfall, BabyA Littlething, Sachi Vixen, Lares Carter, Pounce Teazle, Lizzy Macarthur, Lance Corrimal, Kage Pixel, Marc Claridge, Minerva Memel, snowy Sidran, ArminasX Saiman, Nicky Perian, Lunita Savira, Oryx Tempel, Stickman Ingmann, SexySteven Morrisey, Alejandro Rosenthal, Dylan Haskell, Adam Marker, Aura Dirval, Salahzar Stenvaag, Chantal Harvey, Void Singer, Trinity Dejavu, Flower Ducatillon, Kestral Karas, Professor Noarlunga, Kunnis Basiat, Nick Rhodes, Vex Streeter, Renault Clio, Teardrops Fall, Mallory Destiny, Lexi Frua, Emma Portilo, Iyoba Tarantal, SpacedOut Frye, Decro Schmooz, Nicholaz Beresford, Naomah Beaumont, Dante Tucker, Melinda Latynina, Kithrak Kirkorian, Nao Noe, Simon Nolan, Michelle2 Zenovka, Manx Wharton, tenebrous pau, Midian Farspire, Shawn Kaufmat, Latif Khalifa, Dale Glass, Callipygian Christensen, Alliez Mysterio, Lockhart Cordoso, Eddy Stryker, Khisme Nitely, Fury Rosewood, Dusan Writer, Vick Forcella, RedMokum Bravin, Thickbrick Sleaford, Shnurui Troughton, Synystyr Texan, Avatar Quinzet, Iskar Ariantho, Juilan Tripsa, Guni Greenstein, Siana Gearz, Watty Berkson, Carla Broek, Dartagan Shepherd, Leal Choche, Sitearm Madonna, Zoex Flanagan, Justin RiversRunRed, Catherine Pfeffer, Satomi Ahn, Cayu Cluny, Egehan Dryke, Sini Nubalo, Ham Rambler, Xiki Luik, Gene Frostbite, Marine Kelley, TouchaHoney Perhaps, Hamncheese Omlet, Mm Alder, Cherry Cheevers, Hypatia Pickens, Jacek Antonelli, Ciaran Laval, Asuka Neely, Zipherius Turas, Neko Link, Aralara Rajal, Harleen Gretzky, LSL Scientist, Lenae Munz, Ellla McMahon, ZenMondo Wormser, Kerutsen Sellery, Colpo Wexler, sicarius Thorne, Michi Lumin, Jinx Nordberg, tiamat bingyi, Identity Euler, Thraxis Epsilon, Bryn Oh, Mr Greggan, princess niven, Sahkolihaa Contepomi, Vadim Bigbear, ChickyBabes Zuzu, Benja Kepler, Be Holder, HappySmurf Papp, Vector Hastings, Seg Baphomet, Radio Signals, Eddi Decosta, Nathiel Siamendes, Laurent Bechir, Nicholai Laviscu, Ganymedes Costagravas, Whoops Babii, Corinne Helendale, Biancaluce Robbiani, Dimitrio Lewis, Medhue Simoni, Riva, Ken March, Scrim Pinion, Asturkon Jua, Matthew Anthony, Joghert LeSabre, Hiro Sommambulist, Jocial Sonnenkern, Ralf Setsuko, Blitzckreed Levenque, Annika Genezzia, Bacchus Ireto, Takeda Terrawyng, Ai Austin, WolfPup Lowenhar, Hitomi Tiponi, Geneko Nemeth, Stevex Janus, Viaticus Speculaas, Grady Echegaray, Pixel Gausman, Frenchimmo Sabra, Luban Yiyuan, Hydra Shaftoe, JB Kraft, Whimsy Winx, SaintLEOlions Zimer, Trey Reanimator, len Starship, Emmie Fairymeadow, Questar Utu, Henri Beauchamp, Matthew Dowd, Boroondas Gupte, Rosco Teardrop, Miles Glaz, Innula Zenovka, Hypatia Callisto, Angus Boyd, Sudane Erato, Ardy Lay, Jack Abraham, leliel Mirihi, YongYong Francois, Westley Schridde, Hanglow Short, Unlikely Quintessa, Armin Weatherwax, Able Whitman, Aimee Trescothick, Jagga Meredith, Twisted Laws, Mitch Wagner, Rudee Voom, Beth Walcher, Ginko Bayliss, Lilly Zenovka, Beansy Twine, Luminous Luminos, Grazer Kline, Carr Arbenlow, Kaimen Takahe, Tiel Stonecutter, Zaren Alexander, Nicoladie Gymnast, Pixel Scientist, Polo Gufler, Han Shuffle, Jondan Lundquist, Ollie Kubrick, Maxim RiversRunRed, Feep Larsson, Kadah Coba, Elric Anatine, march Korda, Netpat Igaly, Torben Trautman, RAT Quan, Ima Mechanique, Celierra Darling, Revolution Perenti, Faelon Swordthain, Balp Allen, Lamorna Proctor, Kagehi Kohn, Malwina Dollinger, Agathos Frascati, Trinity Dechou, SLB Wirefly, Christopher  Organiser, Sheet Spotter, Rezit Sideways, Bazaar, Pf Shan, Ian Kas, DiJodi Dubratt, Jeremy Marquez, blino Nakamura, ArminWeatherHax, GeneJ Composer, Wilton Lundquist, Madison Blanc, Arya Braveheart, Strife Onizuka
+      </text_editor>
+      <text
+          follows="top|left"
+          height="10"
+          layout="topleft"
+          left="5"
+          name="trans_intro"
+          top_pad="10"
+          width="435"
+          wrap="true">
+and translations from:
+      </text>
+      <text_editor
+       enabled="false" 
+       follows="top|left"
+       height="98"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="trans_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+Torben Trautman, Valerie Linden, Minerva Memel, Aura Dirval, Cayu Cluny, Xiki Luik, Polo Gufler, gefeit Dufaux, Zaza Linden, Irene Muni, Flemming Congrejo, Lunita Savira, Aralara Rajal, Catwise Yoshikawa, Identity Euler, Frontera Thor, Shinya Tandino, Eva Rau, FreeSL Aeon, Inma Rau
+      </text_editor>
+    </panel>
+    <panel
+      border="true"
+      label="Firestorm Credits"
+      help_topic="about_fscredits_tab"
+      name="fs_credits_panel">
+      <text
+          follows="top|left|right"
+          height="100"
+          layout="topleft"
+          left="5"
+          name="firestorm_intro"
+          top="10"
+          width="435"
+          wrap="true">
+Angstrom is a community development project to improve the Aurora-Sim server experience. Angstrom is a fork from Phoenix Firestorm Viewer. The Angstrom Development Team thanks everyone who contributed to, and supported the Firestorm Viewer and The Phoenix Viewer Project Inc.
+
+The Firestorm Development Team:
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="60"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="firestorm_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+Ansariel Hiller, ArminWeatherHax, Arrehn Oberlander, Cinder Roxley, Holy Gavenkrantz, Jessica Lyon, Kadah Coba, Kitty Barnett, Liny Odell, LordGregGreg Back, Mobius Ryba, Nicky Dasmijn, Selo Jacobus, Tankmaster Finesmith, Techwolf Lupindo, Tonya Souther, Tozh Taurog, Vortex Saito, WoLf Loonie, Wolfspirit Magic and Zi Ree.
+      </text_editor>
+      <text
+          follows="top|left"
+          height="10"
+          layout="topleft"
+          left="5"
+          name="fs_contrib_intro"
+          top_pad="10"
+          width="435"
+          wrap="true">
+Additional code generously contributed to Firestorm by:
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="75"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="fs_contrib_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+Albatroz Hird, Alexie Birman, Andromeda Rage, Armin Weatherwax, Casper Warden, Chalice Yao, Cron Stardust, Damian Zhaoying, Dawa Gurbux, Felyza Wishbringer, f0rbidden, Fractured Crystal, Hitomi Tiponi, Katharine Berry, Kittin Ninetails, Kool Koolhoven, Lance Corrimal, Magne Metaverse LLC, Magus Freston, MartinRJ Fayray, Melancholy Lemon, Miguael Liamano, Mimika Oh, Mister Acacia, Mysty Saunders, Nagi Michinaga, nhede Core, NiranV Dean, Nogardrevlis Lectar, paperwork, Peyton Menges, programmtest, Qwerty Venom, Revolution Smythe, Sahkolihaa Contepomi, sal Kaligawa, Satomi Ahn, Shin Wasp, Shyotl Kuhr, Sione Lomu, Sunset Faulkes, Thickbrick Sleaford, Vaalith Jinn, Whirly Fizzle, Zwagoth Klaar and others.
+      </text_editor>
+
+      <text
+    follows="top|left"
+    height="25"
+    layout="topleft"
+    left="5"
+    name="fs_support_intro"
+    top_pad="10"
+    width="435"
+    wrap="true">
+Special thanks to our Firestorm Support Team, wiki editors, educators, and translators:
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="75"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="fs_trans_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+        Afrika Burton, Albatroz Hird, Alexru Resident, alison Seesaw, AnaLucia Loon, Angell Airy, Annuccia Resident, Annuccia Vuckovic, Anubi Alter, Atthosz Amiot, Ayelin Ethaniel, Basement Desade, Bia Scribe, Bluezy Bleac, Christy Mansbridge, Chymy India, Cordoba Cluny, Damian Zhaoying, DARK Mirabella, Ed Merryman, Eressea Karsin, Erick Gregan, F0RBIDDEN, Fabry String, Flandria Connolly, Foksy, Franklyn Watanabe, FreeSpirit Simmering, Gee McAuley, Gweneth Lange, Hatake Kohime, Hiroshi Kumaki, Hope Dreier, Jodi Nikolaidis, JogiTE Clip, Kool Koolhoven, Kosmox Voom, Lachrimo Skytower, Lalwende Leakey, Landaree Levee, Lassie, Lette Ponnier, Lina Pussycat, Lyn Mimistrobell, Marybeth Oceanlane, Mickeala Praga, Miller Thor, Miro Collas, Mister Acacia, Morgause Whiteberry, Mysty Saunders, Nano Bouscario, narcisssia McMahon, Natem Andel, Nicoletta Schnute, Nisa Maverick, NogarDrevlis Lectar, Norton Burns, PanteraPolnocy, Peewee Musytari, Pisano Smit, PixelProphet Lane, Pol Xaron, Poledra Behemoth, Programmtest, Rander Teskat, Ricky Munz, Riku Highfield, RINOBIT Footman, Robert0 Siamendes, Roth Grut, Sabah Back, SaHaRa Connor, Selene Gregoire, Selo Jacobus, silvanaf Demina, Sniper Siemans, Spartaco Zemenis , Spino Forcella, Srilania Svoboda, Sunset Faulkes, Tanja Levenque, TankMaster Finesmith, Tarlyn Dagger, Thea Brianna, Toy Wylie, Whirly Fizzle, Willow Wilder, Wolfspirit Magic and XLR8RRICK Hudson.
+      </text_editor>
+      <text
+          follows="top|left"
+          height="70"
+          layout="topleft"
+          left="5"
+          name="fs_art_intro"
+          top_pad="10"
+          width="435"
+          wrap="true">
+Firestorm includes Starlight, modified for Firestorm.  It is provided by residents for residents, with the intention of providing an alternative, brighter, and hopefully easier to use interface.  For further details see &lt;nolink&gt;https://wiki.secondlife.com/wiki/Viewer_Skins/Starlight&lt;/nolink&gt;.
+
+UI Artists and Designers:
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="75"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="fs_artists_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+Alexandrea Fride, DarkAgent Baphomet, Digital Scribe, Hitomi Tiponi, Hugh Helendale, KirstenLee Cinquetti, Mobius Ryba, Nadin, Naomah Beaumont, psi Merlin, samm florian and Sammie Benoir.
+      </text_editor>
+    </panel>
+    <panel
+          border="true"
+          label="Angstrom Credits"
+          help_topic="about_ascredits_tab"
+          name="as_credits_panel">
+      <text
+          follows="top|left|right"
+          height="90"
+          layout="topleft"
+          left="5"
+          name="angstrom_intro"
+          top="10"
+          width="435"
+          wrap="true">
+        Angstrom is a community development project to improve the Aurora-Sim server experience.  We package contributions from various community developers along with code from Linden Lab, Firestorm and ourselves to bring you a quality, feature-rich viewer experience. Angstrom is a fork from Phoenix Firestorm viewer.
+
+        The Angstrom Development Team:
+
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="60"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="angstrom_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+        nhede Core.
+
+      </text_editor>
+      <text
+          follows="top|left"
+          height="10"
+          layout="topleft"
+          left="5"
+          name="as_contrib_intro"
+          top_pad="10"
+          width="435"
+          wrap="true">
+        Additional code generously contributed to Angstrom by:
+
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="75"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="as_contrib_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+        Matto_Destiny, VoodooSam, RevolutionSmythe, k\o\w, travolta.
+
+      </text_editor>
+
+      <text
+    follows="top|left"
+    height="25"
+    layout="topleft"
+    left="5"
+    name="as_support_intro"
+    top_pad="10"
+    width="435"
+    wrap="true">
+        Special thanks to our Angstrom Support Team, wiki editors, educators, and translators:
+
+      </text>
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="75"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="as_trans_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+        RevolutionSmythe, H-H-H, skidz, ConnerXSc, BlackRoseXSc, Cas-Habr, Andsim.
+
+      </text_editor>
+      <text
+          follows="top|left"
+          height="70"
+          layout="topleft"
+          left="5"
+          name="fs_special_intro"
+          top_pad="10"
+          width="435"
+          wrap="true">
+        Angstrom's main target is to support the Aurora-Sim grid and server systems. Angstrom gets patches from the Firestorm development repository on a regular basis. Angstrom Development Team does not intend to have Firestorm or LindenLabs viewer Unreleased Features released. If this happens, contact the Angstrom Development Team.
+
+      </text>
+      <!--
+      <text_editor
+       enabled="false"
+       follows="top|left"
+       height="75"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="fs_artists_names"
+       top_pad="10"
+       width="435"
+       word_wrap="true">
+        none.
+      </text_editor>
+      -->
+    </panel>
+    <panel
+      border="true"
+      label="Licenses"
+      help_topic="about_licenses_tab"
+      name="licenses_panel">
+      <text_editor
+       enabled="false"
+       follows="left|top"
+       height="500"
+       bg_readonly_color="Transparent"
+       left="5"
+       text_color="LtGray"
+       max_length="65536"
+       name="credits_editor"
+       top="5"
+       width="435"
+       word_wrap="true">
+3Dconnexion SDK Copyright (C) 1992-2009 3Dconnexion
+APR Copyright (C) 2011 The Apache Software Foundation
+Collada DOM Copyright 2006 Sony Computer Entertainment Inc.
+cURL Copyright (C) 1996-2010, Daniel Stenberg, (daniel@haxx.se)
+DBus/dbus-glib Copyright (C) 2002, 2003  CodeFactory AB / Copyright (C) 2003, 2004 Red Hat, Inc.
+expat Copyright (C) 1998, 1999, 2000 Thai Open Source Software Center Ltd.
+FreeType Copyright (C) 1996-2002, 2006 David Turner, Robert Wilhelm, and Werner Lemberg.
+GL Copyright (C) 1999-2004 Brian Paul.
+GLOD Copyright (C) 2003-04 Jonathan Cohen, Nat Duca, Chris Niski, Johns Hopkins University and David Luebke, Brenden Schubert, University of Virginia.
+google-perftools Copyright (c) 2005, Google Inc.
+Havok.com(TM) Copyright (C) 1999-2001, Telekinesys Research Limited.
+jpeg2000 Copyright (C) 2001, David Taubman, The University of New South Wales (UNSW)
+jpeglib Copyright (C) 1991-1998, Thomas G. Lane.
+ogg/vorbis Copyright (C) 2002, Xiphophorus
+OpenSSL Copyright (C) 1998-2008 The OpenSSL Project.
+PCRE Copyright (c) 1997-2012 University of Cambridge
+SDL Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002 Sam Lantinga
+SSLeay Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+xmlrpc-epi Copyright (C) 2000 Epinions, Inc.
+zlib Copyright (C) 1995-2012 Jean-loup Gailly and Mark Adler.
+Some icons by Joseph Wain / glyphish.com
+
+Second Life Viewer uses Havok (TM) Physics. (c)Copyright 1999-2010 Havok.com Inc. (and its Licensors). All Rights Reserved. See www.havok.com for details.
+
+This software contains source code provided by NVIDIA Corporation.
+
+All rights reserved.  See licenses.txt for details.
+
+Voice chat Audio coding: Polycom(R) Siren14(TM) (ITU-T Rec. G.722.1 Annex C)
+      </text_editor>
+      </panel>
+    </tab_container>
+</floater>

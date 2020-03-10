@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<floater name="incoming call" title="來電">
+	<floater.string name="lifetime">
+		5
+	</floater.string>
+	<floater.string name="localchat">
+		附近的語音聊天
+	</floater.string>
+	<floater.string name="anonymous">
+		匿名
+	</floater.string>
+	<floater.string name="VoiceInviteP2P">
+		來電中。
+	</floater.string>
+	<floater.string name="VoiceInviteAdHoc">
+		已加入多方語音通話。
+	</floater.string>
+	<floater.string name="VoiceInviteGroup">
+		剛加入 &apos;[GROUP]&apos; 語音頻道。
+	</floater.string>
+	<floater.string name="VoiceInviteQuestionGroup">
+		是否離開 [CURRENT_CHAT] 並加入和「[GROUP]」通話？
+	</floater.string>
+	<floater.string name="VoiceInviteQuestionDefault">
+		是否離開 [CURRENT_CHAT] 並加入這個語音聊天？
+	</floater.string>
+	<text name="question">
+		是否離開 [CURRENT_CHAT] 並加入這個語音聊天？
+	</text>
+	<button label="接受" label_selected="接受" name="Accept"/>
+	<button label="拒絕" label_selected="拒絕" name="Reject"/>
+	<button label="開始 IM" name="Start IM"/>
+</floater>
