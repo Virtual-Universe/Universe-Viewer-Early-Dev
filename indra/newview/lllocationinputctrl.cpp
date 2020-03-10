@@ -63,12 +63,18 @@
 #include "llviewermenu.h"
 #include "llurllineeditorctrl.h"
 #include "llagentui.h"
+
 // [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.2.0d)
 #include "rlvhandler.h"
 // [/RLVa:KB]
 
 #include "llmenuoptionpathfindingrebakenavmesh.h"	// <FS:Zi> Pathfinding rebake functions
 #include "llfloaterreg.h"
+
+// Do not show pathfinding icons in OpenSimulator
+#ifdef OPENSIM
+#include "llviewernetwork.h"
+#endif
 
 //============================================================================
 /*
@@ -111,12 +117,14 @@ public:
 	LLAddLandmarkObserver(LLLocationInputCtrl* input) : mInput(input) {}
 
 private:
-	/*virtual*/ void done()
+	void done()
 	{
 		uuid_vec_t::const_iterator it = mAdded.begin(), end = mAdded.end();
+	
 		for(; it != end; ++it)
 		{
 			LLInventoryItem* item = gInventory.getItem(*it);
+		
 			if (!item || item->getType() != LLAssetType::AT_LANDMARK)
 				continue;
 
@@ -124,6 +132,7 @@ private:
 			LLLandmark* lm = gLandmarkList.getAsset(
 					item->getAssetUUID(),
 					boost::bind(&LLLocationInputCtrl::onLandmarkLoaded, mInput, _1));
+			
 			if (lm)
 			{
 				// Already loaded? Great, handle it immediately (the callback won't be called).
@@ -146,7 +155,7 @@ public:
 	LLRemoveLandmarkObserver(LLLocationInputCtrl* input) : mInput(input) {}
 
 private:
-	/*virtual*/ void changed(U32 mask)
+	void changed(U32 mask)
 	{
 		if (mask & (~(LLInventoryObserver::LABEL|LLInventoryObserver::INTERNAL|LLInventoryObserver::ADD)))
 		{
@@ -163,7 +172,7 @@ public:
 	LLParcelChangeObserver(LLLocationInputCtrl* input) : mInput(input) {}
 
 private:
-	/*virtual*/ void changed()
+	void changed()
 	{
 		if (mInput)
 		{
@@ -173,9 +182,6 @@ private:
 
 	LLLocationInputCtrl* mInput;
 };
-
-//============================================================================
-
 
 static LLDefaultChildRegistry::Register<LLLocationInputCtrl> r("location_input");
 
@@ -263,6 +269,7 @@ LLLocationInputCtrl::LLLocationInputCtrl(const LLLocationInputCtrl::Params& p)
 	{
 		mLandmarkImageOn = p.add_landmark_image_enabled;
 	}
+
 	if (p.add_landmark_image_disabled())
 	{
 		mLandmarkImageOff = p.add_landmark_image_disabled;
@@ -272,6 +279,7 @@ LLLocationInputCtrl::LLLocationInputCtrl(const LLLocationInputCtrl::Params& p)
 	{
 		al_params.image_selected = p.add_landmark_image_selected;
 	}
+
 	if (p.add_landmark_image_hover())
 	{
 		al_params.image_hover_unselected = p.add_landmark_image_hover;
@@ -286,10 +294,12 @@ LLLocationInputCtrl::LLLocationInputCtrl(const LLLocationInputCtrl::Params& p)
 	{
 		mIconMaturityGeneral = p.icon_maturity_general;
 	}		
+
 	if (p.icon_maturity_adult())
 	{
 		mIconMaturityAdult = p.icon_maturity_adult;
 	}
+
 	if(p.icon_maturity_moderate())
 	{
 		mIconMaturityModerate = p.icon_maturity_moderate;
@@ -388,16 +398,19 @@ LLLocationInputCtrl::LLLocationInputCtrl(const LLLocationInputCtrl::Params& p)
 
 	// Load the location field context menu
 	mLocationContextMenu = LLUICtrlFactory::getInstance()->createFromFile<LLMenuGL>("menu_navbar.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
+
 	if (!mLocationContextMenu)
 	{
 		llwarns << "Error loading navigation bar context menu" << llendl;
 		
 	}
+
 	getTextEntry()->setRightMouseUpCallback(boost::bind(&LLLocationInputCtrl::onTextEditorRightClicked,this,_2,_3,_4));
 	updateWidgetlayout();
 
 	// Connecting signal for updating location on "Show Coordinates" setting change.
 	LLControlVariable* coordinates_control = gSavedSettings.getControl("NavBarShowCoordinates").get();
+
 	if (coordinates_control)
 	{
 		mCoordinatesControlConnection = coordinates_control->getSignal()->connect(boost::bind(&LLLocationInputCtrl::refreshLocation, this));
@@ -405,6 +418,7 @@ LLLocationInputCtrl::LLLocationInputCtrl(const LLLocationInputCtrl::Params& p)
 
 	// Connecting signal for updating parcel icons on "Show Parcel Properties" setting change.
 	LLControlVariable* parcel_properties_control = gSavedSettings.getControl("NavBarShowParcelProperties").get();
+
 	if (parcel_properties_control)
 	{
 		mParcelPropertiesControlConnection = parcel_properties_control->getSignal()->connect(boost::bind(&LLLocationInputCtrl::refreshParcelIcons, this));
@@ -415,6 +429,7 @@ LLLocationInputCtrl::LLLocationInputCtrl(const LLLocationInputCtrl::Params& p)
 	// - Update the location string on parcel change.
 	mParcelMgrConnection = LLViewerParcelMgr::getInstance()->addAgentParcelChangedCallback(
 		boost::bind(&LLLocationInputCtrl::onAgentParcelChange, this));
+
 	// LLLocationHistory instance is being created before the location input control, so we have to update initial state of button manually.
 	mButton->setEnabled(LLLocationHistory::instance().getItemCount() > 0);
 	mLocationHistoryConnection = LLLocationHistory::getInstance()->setChangedCallback(
@@ -435,6 +450,11 @@ LLLocationInputCtrl::LLLocationInputCtrl(const LLLocationInputCtrl::Params& p)
 	mEditLandmarkTooltip = LLTrans::getString("LocationCtrlEditLandmarkTooltip");
 	mButton->setToolTip(LLTrans::getString("LocationCtrlComboBtnTooltip"));
 	mInfoBtn->setToolTip(LLTrans::getString("LocationCtrlInfoBtnTooltip"));
+
+	// Prevent querying LLTrans each frame
+	mTooltips.push_back(LLTrans::getString("LocationCtrlGeneralIconTooltip"));
+	mTooltips.push_back(LLTrans::getString("LocationCtrlAdultIconTooltip"));
+	mTooltips.push_back(LLTrans::getString("LocationCtrlModerateIconTooltip"));
 }
 
 LLLocationInputCtrl::~LLLocationInputCtrl()
@@ -464,31 +484,37 @@ void LLLocationInputCtrl::setEnabled(BOOL enabled)
 void LLLocationInputCtrl::hideList()
 {
 	LLComboBox::hideList();
+
 	if (mTextEntry && hasFocus())
+	{
 		focusTextEntry();
+	}
 }
 
 BOOL LLLocationInputCtrl::handleToolTip(S32 x, S32 y, MASK mask)
 {
-
 	if(mAddLandmarkBtn->parentPointInView(x,y))
 	{
 		updateAddLandmarkTooltip();
 	}
+
 	// Let the buttons show their tooltips.
 	if (LLUICtrl::handleToolTip(x, y, mask))
 	{
 		if (mList->getRect().pointInRect(x, y)) 
 		{
 			S32 loc_x, loc_y;
-			//x,y - contain coordinates related to the location input control, but without taking the expanded list into account
-			//So we have to convert it again into local coordinates of mList
+
+			// x,y - contain coordinates related to the location input control, but without taking the expanded list into account
+			// So we have to convert it again into local coordinates of mList
 			localPointToOtherView(x,y,&loc_x,&loc_y,mList);
 			
 			LLScrollListItem* item =  mList->hitItem(loc_x,loc_y);
+			
 			if (item)
 			{
 				LLSD value = item->getValue();
+			
 				if (value.has("tooltip"))
 				{
 					LLToolTipMgr::instance().show(value["tooltip"]);
@@ -531,6 +557,7 @@ void LLLocationInputCtrl::onTextEntry(LLLineEditor* line_editor)
 	else if (typing || pasting)
 	{
 		prearrangeList(line_editor->getText());
+
 		if (mList->getItemCount() != 0)
 		{
 			showList();
@@ -557,6 +584,7 @@ void LLLocationInputCtrl::setText(const LLStringExplicit& text)
 	{
 		mTextEntry->setText(text);
 	}
+
 	mHasAutocompletedText = FALSE;
 }
 
@@ -577,8 +605,7 @@ void LLLocationInputCtrl::handleLoginComplete()
 	refresh();
 }
 
-//== private methods =========================================================
-
+// private methods
 void LLLocationInputCtrl::onFocusReceived()
 {
 	prearrangeList();
@@ -600,16 +627,19 @@ void LLLocationInputCtrl::onFocusLost()
 void LLLocationInputCtrl::draw()
 {
 	static LLUICachedControl<bool> show_coords("NavBarShowCoordinates", false);
+
 	if(!hasFocus() && show_coords)
 	{
 		refreshLocation();
 	}
 	
 	static LLUICachedControl<bool> show_icons("NavBarShowParcelProperties", false);
+
 	if (show_icons)
 	{
 		refreshHealth();
 	}
+
 	LLComboBox::draw();
 }
 
@@ -619,6 +649,7 @@ void LLLocationInputCtrl::reshape(S32 width, S32 height, BOOL called_from_parent
 
 	// Setting cursor to 0  to show the left edge of the text. See EXT-4967.
 	mTextEntry->setCursor(0);
+
 	if (mTextEntry->hasSelection())
 	{
 		// Deselecting because selection position is changed together with
@@ -634,13 +665,13 @@ void LLLocationInputCtrl::reshape(S32 width, S32 height, BOOL called_from_parent
 
 void LLLocationInputCtrl::onInfoButtonClicked()
 {
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
+	// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
 	if (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC))
+	{
 		return;
-// [/RLVa:KB]
+	}
 
-	// <FS:Ansariel> FIRE-817: Separate place details floater
-	//LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "agent"));
+	// FIRE-817: Separate place details floater
 	if (gSavedSettings.getBOOL("FSUseStandalonePlaceDetailsFloater"))
 	{
 		LLFloaterReg::showInstance("fs_placedetails", LLSD().with("type", "agent"));
@@ -649,27 +680,29 @@ void LLLocationInputCtrl::onInfoButtonClicked()
 	{
 		LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "agent"));
 	}
-	// </FS:Ansariel>
 }
 
 void LLLocationInputCtrl::onForSaleButtonClicked()
 {
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
+	// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
 	if (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC))
+	{
 		return;
-// [/RLVa:KB]
+	}
 
 	handle_buy_land();
 }
 
 void LLLocationInputCtrl::onAddLandmarkButtonClicked()
 {
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
+	// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
 	if (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC))
+	{
 		return;
-// [/RLVa:KB]
+	}
 
 	LLViewerInventoryItem* landmark = LLLandmarkActions::findLandmarkForAgentPos();
+	
 	// Landmark exists, open it for preview and edit
 	if(landmark && landmark->getUUID().notNull())
 	{
@@ -677,8 +710,7 @@ void LLLocationInputCtrl::onAddLandmarkButtonClicked()
 		key["type"] = "landmark";
 		key["id"] = landmark->getUUID();
 
-		// <FS:Ansariel> FIRE-817: Separate place details floater
-		//LLFloaterSidePanelContainer::showPanel("places", key);
+		// FIRE-817: Separate place details floater
 		if (gSavedSettings.getBOOL("FSUseStandalonePlaceDetailsFloater"))
 		{
 			LLFloaterReg::showInstance("fs_placedetails", key);
@@ -687,12 +719,10 @@ void LLLocationInputCtrl::onAddLandmarkButtonClicked()
 		{
 			LLFloaterSidePanelContainer::showPanel("places", key);
 		}
-		// </FS:Ansariel>
 	}
 	else
 	{
-		// <FS:Ansariel> FIRE-817: Separate place details floater
-		//LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "create_landmark"));
+		// FIRE-817: Separate place details floater
 		if (gSavedSettings.getBOOL("FSUseStandalonePlaceDetailsFloater"))
 		{
 			LLFloaterReg::showInstance("fs_placedetails", LLSD().with("type", "create_landmark"));
@@ -701,7 +731,6 @@ void LLLocationInputCtrl::onAddLandmarkButtonClicked()
 		{
 			LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "create_landmark"));
 		}
-		// </FS:Ansariel>
 	}
 }
 
@@ -738,6 +767,7 @@ void LLLocationInputCtrl::onLocationHistoryChanged(LLLocationHistory::EChangeTyp
 	{
 		rebuildLocationHistory();
 	}
+	
 	mButton->setEnabled(LLLocationHistory::instance().getItemCount() > 0);
 }
 
@@ -746,7 +776,7 @@ void LLLocationInputCtrl::onLocationPrearrange(const LLSD& data)
 	std::string filter = data.asString();
 	rebuildLocationHistory(filter);
 
-	//Let's add landmarks to the top of the list if any
+	// Let's add landmarks to the top of the list if any
 	if(!filter.empty() )
 	{
 		LLInventoryModel::item_array_t landmark_items = LLLandmarkActions::fetchLandmarksByName(filter, TRUE);
@@ -754,6 +784,7 @@ void LLLocationInputCtrl::onLocationPrearrange(const LLSD& data)
 		for(U32 i=0; i < landmark_items.size(); i++)
 		{
 			LLSD value;
+		
 			//TODO:: DO we need tooltip for Landmark??
 			
 			value["item_type"] = LANDMARK;
@@ -761,7 +792,8 @@ void LLLocationInputCtrl::onLocationPrearrange(const LLSD& data)
 			add(landmark_items[i]->getName(), value);
 			
 		}
-	//Let's add teleport history items
+	
+		// Let's add teleport history items
 		LLTeleportHistory* th = LLTeleportHistory::getInstance();
 		LLTeleportHistory::slurl_list_t th_items = th->getItems();
 
@@ -773,23 +805,24 @@ void LLLocationInputCtrl::onLocationPrearrange(const LLSD& data)
 
 		while (result != th_items.end())
 		{
-			//mTitile format - region_name[, parcel_name]
-			//mFullTitile format - region_name[, parcel_name] (local_x,local_y, local_z)
 			if (new_item_titles.insert(result->mFullTitle).second)
 			{
 				LLSD value;
 				value["item_type"] = TELEPORT_HISTORY;
 				value["global_pos"] = result->mGlobalPos.getValue();
 				std::string region_name = result->mTitle.substr(0, result->mTitle.find(','));
-				//TODO*: add Surl to teleportitem or parse region name from title
+		
+				// TODO: add Surl to teleportitem or parse region name from title
 				value["tooltip"] = LLSLURL(region_name, result->mGlobalPos).getSLURLString();
 				add(result->getTitle(), value); 
 			}
+
 			result = std::find_if(result + 1, th_items.end(), boost::bind(
 									&LLLocationInputCtrl::findTeleportItemsByTitle, this,
 									_1, filter));
 		}
 	}
+
 	sortByName();
 	
 	mList->mouseOverHighlightNthItem(-1); // Clear highlight on the last selected item.
@@ -816,9 +849,8 @@ void LLLocationInputCtrl::onTextEditorRightClicked(S32 x, S32 y, MASK mask)
 
 void LLLocationInputCtrl::refresh()
 {
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
+	// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
 	mInfoBtn->setEnabled(!gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC));
-// [/RLVa:KB]
 
 	refreshLocation();			// update location string
 	refreshParcelIcons();
@@ -847,6 +879,7 @@ void LLLocationInputCtrl::refreshLocation()
 	{
 		location_name = "???";
 	}
+
 	// store human-readable location to compare it in changeLocationPresentation()
 	mHumanReadableLocation = location_name;
 	setText(location_name);
@@ -866,6 +899,7 @@ static S32 layout_widget(LLUICtrl* widget, S32 right)
 		widget->setRect( rect );
 		right -= rect.getWidth();
 	}
+
 	return right;
 }
 
@@ -878,8 +912,11 @@ void LLLocationInputCtrl::refreshParcelIcons()
 
 	LLViewerRegion* agent_region = gAgent.getRegion();
 	LLParcel* agent_parcel = vpm->getAgentParcel();
+
 	if (!agent_region || !agent_parcel)
+	{
 		return;
+	}
 
 	mForSaleBtn->setVisible(vpm->canAgentBuyParcel(agent_parcel, false));
 
@@ -915,6 +952,12 @@ void LLLocationInputCtrl::refreshParcelIcons()
 		bool see_avs        = current_parcel->getSeeAVs();
 		bool pathfinding_dynamic_enabled = agent_region->dynamicPathfindingEnabled();
 
+		// Do not show pathfinding icons on OpenSimulator
+		bool is_opensim = false;
+#ifdef OPENSIM
+		is_opensim = LLGridManager::getInstance()->isInOpenSim();
+#endif
+
 		// Most icons are "block this ability"
 		mParcelIcon[VOICE_ICON]->setVisible(   !allow_voice );
 		mParcelIcon[FLY_ICON]->setVisible(     !allow_fly );
@@ -923,7 +966,10 @@ void LLLocationInputCtrl::refreshParcelIcons()
 		mParcelIcon[SCRIPTS_ICON]->setVisible( !allow_scripts );
 		mParcelIcon[DAMAGE_ICON]->setVisible(  allow_damage );
 		mParcelIcon[PATHFINDING_DIRTY_ICON]->setVisible(mIsNavMeshDirty);
-		mParcelIcon[PATHFINDING_DISABLED_ICON]->setVisible(!mIsNavMeshDirty && !pathfinding_dynamic_enabled);
+		
+		// DO not show pathfinding icons on OpenSimulator
+		mParcelIcon[PATHFINDING_DISABLED_ICON]->setVisible(!mIsNavMeshDirty && !pathfinding_dynamic_enabled
+			&& !is_opensim);
 
 		mDamageText->setVisible(allow_damage);
 		mParcelIcon[SEE_AVATARS_ICON]->setVisible( !see_avs );
@@ -937,6 +983,7 @@ void LLLocationInputCtrl::refreshParcelIcons()
 			x = layout_widget(mParcelIcon[i], x);
 			x -= mIconHPad;
 		}
+
 		x = layout_widget(mDamageText, x);
 		x -= mIconHPad;
 	}
@@ -946,6 +993,7 @@ void LLLocationInputCtrl::refreshParcelIcons()
 		{
 			mParcelIcon[i]->setVisible(false);
 		}
+		
 		mDamageText->setVisible(false);
 	}
 
@@ -965,6 +1013,7 @@ void LLLocationInputCtrl::refreshHealth()
 	{
 		static S32 last_health = -1;
 		S32 health = gStatusBar->getHealth();
+		
 		if (health != last_health)
 		{
 			std::string text = llformat("%d%%", health);
@@ -978,8 +1027,11 @@ void LLLocationInputCtrl::refreshMaturityButton()
 {
 	// Updating maturity rating icon.
 	LLViewerRegion* region = gAgent.getRegion();
+	
 	if (!region)
+	{
 		return;
+	}
 
 	bool button_visible = true;
 	LLPointer<LLUIImage> rating_image = NULL;
@@ -1010,11 +1062,13 @@ void LLLocationInputCtrl::refreshMaturityButton()
 
 	mMaturityButton->setVisible(button_visible);
 	mMaturityButton->setToolTip(rating_tooltip);
+	
 	if(rating_image)
 	{
 		mMaturityButton->setImageUnselected(rating_image);
 		mMaturityButton->setImagePressed(rating_image);
 	}
+	
 	if (mMaturityButton->getVisible())
 	{
 		positionMaturityButton();
@@ -1024,8 +1078,11 @@ void LLLocationInputCtrl::refreshMaturityButton()
 void LLLocationInputCtrl::positionMaturityButton()
 {
 	const LLFontGL* font = mTextEntry->getFont();
+	
 	if (!font)
+	{
 		return;
+	}
 
 	S32 left_pad, right_pad;
 	mTextEntry->getTextPadding(&left_pad, &right_pad);
@@ -1057,10 +1114,12 @@ void LLLocationInputCtrl::rebuildLocationHistory(const std::string& filter)
 	}
 	
 	removeall();
+	
 	for (LLLocationHistory::location_list_t::const_reverse_iterator it = itemsp->rbegin(); it != itemsp->rend(); it++)
 	{
 		LLSD value;
 		value["tooltip"] = it->getToolTip();
+	
 		//location history can contain only typed locations
 		value["item_type"] = TYPED_REGION_SLURL;
 		value["global_pos"] = it->mGlobalPos.getValue();
@@ -1087,6 +1146,7 @@ void LLLocationInputCtrl::enableAddLandmarkButton(bool val)
 	// We don't want to disable the button because it should be click able at any time, 
 	// instead switch images.
 	LLUIImage* img = val ? mLandmarkImageOn : mLandmarkImageOff;
+	
 	if(img)
 	{
 		mAddLandmarkBtn->setImageUnselected(img);
@@ -1097,14 +1157,14 @@ void LLLocationInputCtrl::enableAddLandmarkButton(bool val)
 // depending on whether current parcel has been landmarked.
 void LLLocationInputCtrl::updateAddLandmarkButton()
 {
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
+	// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
 	mAddLandmarkBtn->setVisible(!gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC));
-// [/RLVa:KB]
 	enableAddLandmarkButton(LLLandmarkActions::hasParcelLandmark());
 }
 void LLLocationInputCtrl::updateAddLandmarkTooltip()
 {
 	std::string tooltip;
+
 	if(LLLandmarkActions::landmarkAlreadyExists())
 	{
 		tooltip = mEditLandmarkTooltip;
@@ -1113,6 +1173,7 @@ void LLLocationInputCtrl::updateAddLandmarkTooltip()
 	{
 		tooltip = mAddLandmarkTooltip;
 	}
+	
 	mAddLandmarkBtn->setToolTip(tooltip);
 }
 
@@ -1121,6 +1182,7 @@ void LLLocationInputCtrl::updateContextMenu(){
 	if (mLocationContextMenu)
 	{
 		LLMenuItemGL* landmarkItem = mLocationContextMenu->getChild<LLMenuItemGL>("Landmark");
+	
 		if (!LLLandmarkActions::landmarkAlreadyExists())
 		{
 			landmarkItem->setLabel(LLTrans::getString("AddLandmarkNavBarMenu"));
@@ -1129,11 +1191,12 @@ void LLLocationInputCtrl::updateContextMenu(){
 		{
 			landmarkItem->setLabel(LLTrans::getString("EditLandmarkNavBarMenu"));
 		}
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
+
+		// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
 		landmarkItem->setEnabled(!gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC));
-// [/RLVa:KB]
 	}
 }
+
 void LLLocationInputCtrl::updateWidgetlayout()
 {
 	const LLRect&	rect			= getLocalRect();
@@ -1152,15 +1215,18 @@ void LLLocationInputCtrl::updateWidgetlayout()
 void LLLocationInputCtrl::changeLocationPresentation()
 {
 	if (!mTextEntry)
+	{
 		return;
+	}
 
-	//change location presentation only if user does not select/paste anything and 
-	//human-readable region name is being displayed
+	// change location presentation only if user does not select/paste anything and 
+	// human-readable region name is being displayed
 	std::string text = mTextEntry->getText();
 	LLStringUtil::trim(text);
+	
 	if(!mTextEntry->hasSelection() && text == mHumanReadableLocation)
 	{
-		//needs unescaped one
+		// needs unescaped one
 		LLSLURL slurl;
 		LLAgentUI::buildSLURL(slurl, false);
 		mTextEntry->setText(LLURI::unescape(slurl.getSLURLString()));
@@ -1187,16 +1253,14 @@ void LLLocationInputCtrl::onLocationContextMenuItemClicked(const LLSD& userdata)
 	}
 	else if (item == "landmark")
 	{
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
+		// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.4.5) | Added: RLVa-1.2.0
 		if (!gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC))
 		{
-// [/RLVa:KB]
 			LLViewerInventoryItem* landmark = LLLandmarkActions::findLandmarkForAgentPos();
 			
 			if(!landmark)
 			{
-				// <FS:Ansariel> FIRE-817: Separate place details floater
-				//LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "create_landmark"));
+				// FIRE-817: Separate place details floater
 				if (gSavedSettings.getBOOL("FSUseStandalonePlaceDetailsFloater"))
 				{
 					LLFloaterReg::showInstance("fs_placedetails", LLSD().with("type", "create_landmark"));
@@ -1205,12 +1269,10 @@ void LLLocationInputCtrl::onLocationContextMenuItemClicked(const LLSD& userdata)
 				{
 					LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "create_landmark"));
 				}
-				// </FS:Ansariel>
 			}
 			else
 			{
-				// <FS:Ansariel> FIRE-817: Separate place details floater
-				//LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "landmark").with("id",landmark->getUUID()));
+				// FIRE-817: Separate place details floater
 				if (gSavedSettings.getBOOL("FSUseStandalonePlaceDetailsFloater"))
 				{
 					LLFloaterReg::showInstance("fs_placedetails", LLSD().with("type", "landmark").with("id",landmark->getUUID()));
@@ -1219,11 +1281,9 @@ void LLLocationInputCtrl::onLocationContextMenuItemClicked(const LLSD& userdata)
 				{
 					LLFloaterSidePanelContainer::showPanel("places", LLSD().with("type", "landmark").with("id",landmark->getUUID()));
 				}
-				// </FS:Ansariel>
 			}
-// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.2.0d) | Added: RLVa-1.2.0d
+			// [RLVa:KB] - Checked: 2010-04-05 (RLVa-1.2.0d) | Added: RLVa-1.2.0d
 		}
-// [/RLVa:KB]
 	}
 	else if (item == "cut")
 	{
@@ -1296,10 +1356,8 @@ void LLLocationInputCtrl::onParcelIconClick(EParcelIcon icon)
 		LLNotificationsUtil::add("NoBuild");
 		break;
 	case PATHFINDING_DIRTY_ICON:
-		// <FS:Zi> Pathfinding rebake functions
-		// LLNotificationsUtil::add("PathfindingDirty");
+		// Pathfinding rebake functions
 		LLNotificationsUtil::add("PathfindingDirty",LLSD(),LLSD(),boost::bind(&LLLocationInputCtrl::rebakeRegionCallback,this,_1,_2));
-		// </FS:Zi>
 		break;
 	case PATHFINDING_DISABLED_ICON:
 		LLNotificationsUtil::add("DynamicPathfindingDisabled");
@@ -1307,6 +1365,7 @@ void LLLocationInputCtrl::onParcelIconClick(EParcelIcon icon)
 	case SCRIPTS_ICON:
 	{
 		LLViewerRegion* region = gAgent.getRegion();
+
 		if(region && region->getRegionFlags() & REGION_FLAGS_ESTATE_SKIP_SCRIPTS)
 		{
 			LLNotificationsUtil::add("ScriptsStopped");
@@ -1341,6 +1400,7 @@ void LLLocationInputCtrl::createNavMeshStatusListenerForCurrentRegion()
 	}
 
 	LLViewerRegion *currentRegion = gAgent.getRegion();
+
 	if (currentRegion != NULL)
 	{
 		mNavMeshSlot = LLPathfindingManager::getInstance()->registerNavMeshListenerForRegion(currentRegion, boost::bind(&LLLocationInputCtrl::onNavMeshStatusChange, this, _2));
@@ -1348,7 +1408,7 @@ void LLLocationInputCtrl::createNavMeshStatusListenerForCurrentRegion()
 	}
 }
 
-// <FS:Zi> Pathfinding rebake functions
+// Pathfinding rebake functions
 BOOL LLLocationInputCtrl::rebakeRegionCallback(const LLSD& notification,const LLSD& response)
 {
 	std::string newSetName=response["message"].asString();
@@ -1360,6 +1420,6 @@ BOOL LLLocationInputCtrl::rebakeRegionCallback(const LLSD& notification,const LL
 			LLMenuOptionPathfindingRebakeNavmesh::getInstance()->rebakeNavmesh();
 		return TRUE;
 	}
+	
 	return FALSE;
 }
-// </FS:Zi>

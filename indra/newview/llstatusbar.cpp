@@ -105,14 +105,17 @@
 #include "llvieweraudio.h"
 #include "fslightshare.h"	// <FS:CR> FIRE-5118 - Lightshare support
 
-//
+// Do not show pathfinding icons on OpenSimulator
+#ifdef OPENSIM
+#include "llviewernetwork.h"
+#endif
+
 // Globals
-//
 LLStatusBar *gStatusBar = NULL;
 S32 STATUS_BAR_HEIGHT = 26;
 extern S32 MENU_BAR_HEIGHT;
 
-// <FS:LO> FIRE-7639 - Stop the blinking after a while
+// FIRE-7639 - Stop the blinking after a while
 LLViewerRegion* agent_region;
 bool bakingStarted = false;
 
@@ -126,10 +129,12 @@ public:
 	{
 		mbar=bar;
 	}
+
 	~LORebakeStuck()
 	{
 		bakeTimeout=NULL;
 	}
+
 	BOOL tick()
 	{
 		mbar->setRebakeStuck(true);
@@ -138,9 +143,6 @@ public:
 private:
 	LLStatusBar *mbar;
 };
-
-// </FS:LO>
-
 
 // TODO: these values ought to be in the XML too
 const S32 MENU_PARCEL_SPACING = 1;	// Distance from right of menu item to parcel information
@@ -162,7 +164,7 @@ public:
 	LLParcelChangeObserver(LLStatusBar* topInfoBar) : mTopInfoBar(topInfoBar) {}
 
 private:
-	/*virtual*/ void changed()
+	void changed()
 	{
 		if (mTopInfoBar)
 		{
@@ -204,7 +206,7 @@ LLStatusBar::LLStatusBar(const LLRect& rect)
 
 	gSavedSettings.getControl("ShowNetStats")->getSignal()->connect(boost::bind(&LLStatusBar::updateNetstatVisibility, this, _2));
 
-	// <FS:PP> Option to hide volume controls (sounds, media, stream) in upper right
+	// Option to hide volume controls (sounds, media, stream) in upper right
 	gSavedSettings.getControl("FSEnableVolumeControls")->getSignal()->connect(boost::bind(&LLStatusBar::updateVolumeControlsVisibility, this, _2));
 
 	buildFromFile("panel_status_bar.xml");
@@ -241,11 +243,7 @@ LLStatusBar::~LLStatusBar()
 	// LLView destructor cleans up children
 }
 
-//-----------------------------------------------------------------------
 // Overrides
-//-----------------------------------------------------------------------
-
-// virtual
 void LLStatusBar::draw()
 {
 	refresh();
@@ -280,10 +278,9 @@ BOOL LLStatusBar::postBuild()
 	mBtnVolume->setClickedCallback( onClickVolume, this );
 	mBtnVolume->setMouseEnterCallback(boost::bind(&LLStatusBar::onMouseEnterVolume, this));
 
-	// ## Zi: Media/Stream separation
+	// Media/Stream separation
 	mStreamToggle = getChild<LLButton>("stream_toggle_btn");
 	mStreamToggle->setClickedCallback( &LLStatusBar::onClickStreamToggle, this );
-	// ## Zi: Media/Stream separation
 
 	mMediaToggle = getChild<LLButton>("media_toggle_btn");
 	mMediaToggle->setClickedCallback( &LLStatusBar::onClickMediaToggle, this );
@@ -298,7 +295,7 @@ BOOL LLStatusBar::postBuild()
 	S32 y = 0;
 	LLRect r;
 	
-	// <FS:PP> FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
+	// FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
 	r.set( x-((SIM_STAT_WIDTH*2)+2), y+MENU_BAR_HEIGHT-1, x, y+1);
 	LLButton::Params BandwidthButton;
 	BandwidthButton.name(std::string("BandwidthGraphButton"));
@@ -311,8 +308,6 @@ BOOL LLStatusBar::postBuild()
 	LLColor4 BandwidthButtonOpacity;
 	BandwidthButtonOpacity.setAlpha(0);
 	mBandwidthButton->setColor(BandwidthButtonOpacity);
-	// </FS:PP> FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
-	
 	r.set( x-SIM_STAT_WIDTH, y+MENU_BAR_HEIGHT-1, x, y+1);
 	LLStatGraph::Params sgp;
 	sgp.name("BandwidthGraph");
@@ -327,7 +322,8 @@ BOOL LLStatusBar::postBuild()
 	x -= SIM_STAT_WIDTH + 2;
 
 	r.set( x-SIM_STAT_WIDTH, y+MENU_BAR_HEIGHT-1, x, y+1);
-	//these don't seem to like being reused
+	
+	// these don't seem to like being reused
 	LLStatGraph::Params pgp;
 	pgp.name("PacketLossPercent");
 	pgp.rect(r);
@@ -361,7 +357,7 @@ BOOL LLStatusBar::postBuild()
 	mParcelInfoPanel = getChild<LLPanel>("parcel_info_panel");
 	mParcelInfoText = getChild<LLTextBox>("parcel_info_text");
 
-	// Ansariel: Removed the info button in favor of clickable parcel info text
+	// Removed the info button in favor of clickable parcel info text
 	mParcelInfoText->setClickedCallback(boost::bind(&LLStatusBar::onInfoButtonClicked, this));
 
 	mDamageText = getChild<LLTextBox>("damage_text");
@@ -372,10 +368,9 @@ BOOL LLStatusBar::postBuild()
 	mPWLBtn = getChild<LLButton>("status_wl_btn");
 	mPWLBtn->setClickedCallback(boost::bind(&LLStatusBar::onParcelWLClicked, this));
 	
-	// <FS:CR> FIRE-5118 - Lightshare support
+	// FIRE-5118 - Lightshare support
 	mLightshareBtn = getChild<LLButton>("status_lightshare_btn");
 	mLightshareBtn->setClickedCallback(boost::bind(&LLStatusBar::onLightshareClicked, this));
-	// </FS:CR>
 
 	mBalancePanel = getChild<LLPanel>("balance_bg");
 	mTimeMediaPanel = getChild<LLPanel>("time_and_media_bg");
@@ -387,6 +382,7 @@ BOOL LLStatusBar::postBuild()
 
 	// Connecting signal for updating parcel icons on "Show Parcel Properties" setting change.
 	LLControlVariable* ctrl = gSavedSettings.getControl("NavBarShowParcelProperties").get();
+	
 	if (ctrl)
 	{
 		mParcelPropsCtrlConnection = ctrl->getSignal()->connect(boost::bind(&LLStatusBar::onNavBarShowParcelPropertiesCtrlChanged, this));
@@ -395,6 +391,7 @@ BOOL LLStatusBar::postBuild()
 
 	// Connecting signal for updating parcel text on "Show Coordinates" setting change.
 	ctrl = gSavedSettings.getControl("NavBarShowCoordinates").get();
+	
 	if (ctrl)
 	{
 		mShowCoordsCtrlConnection = ctrl->getSignal()->connect(boost::bind(&LLStatusBar::onNavBarShowCoordinatesCtrlChanged, this));
@@ -412,13 +409,13 @@ BOOL LLStatusBar::postBuild()
 		updateNetstatVisibility(LLSD(FALSE));
 	}
 
-	// <FS:PP> Option to hide volume controls (sounds, media, stream) in upper right
+	// Option to hide volume controls (sounds, media, stream) in upper right
 	mVolumeIconsWidth = mBtnVolume->getRect().getWidth() + mStreamToggle->getRect().getWidth() + mMediaToggle->getRect().getWidth();
+
 	if (!gSavedSettings.getBOOL("FSEnableVolumeControls"))
 	{
 		updateVolumeControlsVisibility(LLSD(FALSE));
 	}
-	// </FS:PP>
 
 	return TRUE;
 }
@@ -488,27 +485,28 @@ void LLStatusBar::refresh()
 		mTextTime->setToolTip (dtStr);
 	}
 
-	// <FS:Zi> Pathfinding rebake functions
+	// Pathfinding rebake functions
 	static LLMenuOptionPathfindingRebakeNavmesh::ERebakeNavMeshMode pathfinding_mode=LLMenuOptionPathfindingRebakeNavmesh::kRebakeNavMesh_Default;
-	// <FS:LO> FIRE-7639 - Stop the blinking after a while
+
+	// FIRE-7639 - Stop the blinking after a while
 	LLViewerRegion* current_region = gAgent.getRegion();
+
 	if(current_region != agent_region)
 	{
 		agent_region=current_region;
 		bakingStarted = false;
 		mRebakeStuck = false;
 	}
-	// </FS:LO>
+
 	if(	LLMenuOptionPathfindingRebakeNavmesh::getInstance()->isRebaking())
 	{
-		// <FS:LO> FIRE-7639 - Stop the blinking after a while
+		// FIRE-7639 - Stop the blinking after a while
 		if(!bakingStarted)
 		{
 			bakingStarted = true;
 			mRebakeStuck = false;
 			bakeTimeout = new LORebakeStuck(this);
 		}
-		// </FS:LO>
 		
 		if(	agent_region &&
 			agent_region->dynamicPathfindingEnabled() && 
@@ -524,7 +522,6 @@ void LLStatusBar::refresh()
 		pathfinding_mode=LLMenuOptionPathfindingRebakeNavmesh::getInstance()->getMode();
 		updateParcelIcons();
 	}
-	// </FS:Zi>
 
 	LLRect r;
 	const S32 MENU_RIGHT = gMenuBarView->getRightmostMenuEdge();
@@ -534,21 +531,12 @@ void LLStatusBar::refresh()
 	{
 		gMenuBarView->reshape(MENU_RIGHT, gMenuBarView->getRect().getHeight());
 	}
+
 	// also update the parcel info panel pos -KC
 	if ((MENU_RIGHT + MENU_PARCEL_SPACING) != mParcelInfoPanel->getRect().mLeft)
 	{
 		updateParcelPanel();
 	}
-
-	// Ansariel: This is done in LLStatusBar::updateNetstatVisibility()
-	//mSGBandwidth->setVisible(net_stats_visible);
-	//mSGPacketLoss->setVisible(net_stats_visible);
-
-	// It seems this button does no longer exist. I believe this was an overlay button on top of
-	// the net stats graphs to call up the lag meter floater. In case someone revives this, make
-	// sure to use a mSGStatsButton variable, because this function here is called an awful lot
-	// while the viewer runs, and dynamic lookup is very expensive. -Zi
-	//mBtnStats->setEnabled(net_stats_visible);
 
 	// update the master volume button state
 	bool mute_audio = LLAppViewer::instance()->getMasterSystemAudioMute();
@@ -557,22 +545,21 @@ void LLStatusBar::refresh()
 	// Disable media toggle if there's no media, parcel media, and no parcel audio
 	// (or if media is disabled)
 	static LLCachedControl<bool> audio_streaming_media(gSavedSettings, "AudioStreamingMedia");
-	bool button_enabled = (audio_streaming_media) && 	// ## Zi: Media/Stream separation
-						  (LLViewerMedia::hasInWorldMedia() || LLViewerMedia::hasParcelMedia()	// || LLViewerMedia::hasParcelAudio()	// ## Zi: Media/Stream separation
+	bool button_enabled = (audio_streaming_media) && 	// Media/Stream separation
+						  (LLViewerMedia::hasInWorldMedia() || LLViewerMedia::hasParcelMedia()	// Media/Stream separation
 						  );
 	mMediaToggle->setEnabled(button_enabled);
+
 	// Note the "sense" of the toggle is opposite whether media is playing or not
-	bool any_media_playing = (LLViewerMedia::isAnyMediaShowing() || 
-							  LLViewerMedia::isParcelMediaPlaying());
+	bool any_media_playing = (LLViewerMedia::isAnyMediaShowing() || LLViewerMedia::isParcelMediaPlaying());
 	mMediaToggle->setValue(!any_media_playing);
 
-	// ## Zi: Media/Stream separation
+	// Media/Stream separation
 	static LLCachedControl<bool> audio_streaming_music(gSavedSettings, "AudioStreamingMusic");
 	button_enabled = (audio_streaming_music && LLViewerMedia::hasParcelAudio());
 
 	mStreamToggle->setEnabled(button_enabled);
 	mStreamToggle->setValue(!LLViewerMedia::isParcelAudioPlaying());
-	// ## Zi: Media/Stream separation
 
 	mParcelInfoText->setEnabled(!gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC));
 }
@@ -582,19 +569,17 @@ void LLStatusBar::setVisibleForMouselook(bool visible)
 	mTextTime->setVisible(visible);
 	mBalancePanel->setVisible(visible);
 	mBoxBalance->setVisible(visible);
-	// <FS:PP> Option to hide volume controls (sounds, media, stream) in upper right
-	// mBtnVolume->setVisible(visible);
-	// mStreamToggle->setVisible(visible);		// ## Zi: Media/Stream separation
-	// mMediaToggle->setVisible(visible);
+	
+	// Option to hide volume controls (sounds, media, stream) in upper right
 	BOOL FSEnableVolumeControls = gSavedSettings.getBOOL("FSEnableVolumeControls");
 	mBtnVolume->setVisible(visible && FSEnableVolumeControls);
-	mStreamToggle->setVisible(visible && FSEnableVolumeControls); // ## Zi: Media/Stream separation
+	mStreamToggle->setVisible(visible && FSEnableVolumeControls); // Media/Stream separation
 	mMediaToggle->setVisible(visible && FSEnableVolumeControls);
-	// </FS:PP>
+
 	BOOL showNetStats = gSavedSettings.getBOOL("ShowNetStats");
 	mSGBandwidth->setVisible(visible && showNetStats);
 	mSGPacketLoss->setVisible(visible && showNetStats);
-	mBandwidthButton->setVisible(visible && showNetStats); // <FS:PP> FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
+	mBandwidthButton->setVisible(visible && showNetStats); // FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
 	mTimeMediaPanel->setVisible(visible);
 	setBackgroundVisible(visible);
 }
@@ -638,9 +623,13 @@ void LLStatusBar::setBalance(S32 balance)
 	if (mBalance && (fabs((F32)(mBalance - balance)) > gSavedSettings.getF32("UISndMoneyChangeThreshold")))
 	{
 		if (mBalance > balance)
+		{
 			make_ui_sound("UISndMoneyChangeDown");
+		}
 		else
+		{
 			make_ui_sound("UISndMoneyChangeUp");
+		}
 	}
 
 	if( balance != mBalance )
@@ -651,8 +640,6 @@ void LLStatusBar::setBalance(S32 balance)
 	}
 }
 
-
-// static
 void LLStatusBar::sendMoneyBalanceRequest()
 {
 	LLMessageSystem* msg = gMessageSystem;
@@ -665,10 +652,8 @@ void LLStatusBar::sendMoneyBalanceRequest()
 	gAgent.sendReliableMessage();
 }
 
-
 void LLStatusBar::setHealth(S32 health)
 {
-	//llinfos << "Setting health to: " << buffer << llendl;
 	if( mHealth > health )
 	{
 		if (mHealth > (health + gSavedSettings.getF32("UISndHealthReductionThreshold")))
@@ -698,7 +683,6 @@ S32 LLStatusBar::getBalance() const
 	return mBalance;
 }
 
-
 S32 LLStatusBar::getHealth() const
 {
 	return mHealth;
@@ -708,6 +692,7 @@ void LLStatusBar::setLandCredit(S32 credit)
 {
 	mSquareMetersCredit = credit;
 }
+
 void LLStatusBar::setLandCommitted(S32 committed)
 {
 	mSquareMetersCommitted = committed;
@@ -757,7 +742,6 @@ void LLStatusBar::onMouseEnterVolume()
 
 	mPanelVolumePulldown->setShape(volume_pulldown_rect);
 
-
 	// show the master volume pull-down
 	LLUI::clearPopups();
 	LLUI::addPopup(mPanelVolumePulldown);
@@ -788,7 +772,6 @@ void LLStatusBar::onMouseEnterNearbyMedia()
 	mPanelNearByMedia->setVisible(TRUE);
 }
 
-
 static void onClickVolume(void* data)
 {
 	// toggle the master mute setting
@@ -796,55 +779,53 @@ static void onClickVolume(void* data)
 	LLAppViewer::instance()->setMasterSystemAudioMute(!mute_audio);	
 }
 
-//static 
 void LLStatusBar::onClickBalance(void* )
 {
 	// Force a balance request message:
 	LLStatusBar::sendMoneyBalanceRequest();
+	
 	// The refresh of the display (call to setBalance()) will be done by process_money_balance_reply()
 }
-
-//static 
+ 
 void LLStatusBar::onClickMediaToggle(void* data)
 {
 	LLStatusBar *status_bar = (LLStatusBar*)data;
+	
 	// "Selected" means it was showing the "play" icon (so media was playing), and now it shows "pause", so turn off media
 	bool enable = ! status_bar->mMediaToggle->getValue();
 
-	// <FS:Zi> Split up handling here to allow external controls to switch media on/off
-// 	LLViewerMedia::setAllMediaEnabled(enable);
-// }
+	// Split up handling here to allow external controls to switch media on/off
 	status_bar->toggleMedia(enable);
 }
 
 void LLStatusBar::toggleMedia(bool enable)
 {
-	// </FS:Zi>
 	LLViewerMedia::setAllMediaEnabled(enable);
 }
 
-// ## Zi: Media/Stream separation
+// Media/Stream separation
 // static
 void LLStatusBar::onClickStreamToggle(void* data)
 {
 	if (!gAudiop)
+	{
 		return;
+	}
 
 	LLStatusBar *status_bar = (LLStatusBar*)data;
 	bool enable = ! status_bar->mStreamToggle->getValue();
-	// <FS:Zi> Split up handling here to allow external controls to switch media on/off
+
+	// Split up handling here to allow external controls to switch media on/off
 	status_bar->toggleStream(enable);
 }
 
 void LLStatusBar::toggleStream(bool enable)
 {
-	// </FS:Zi>
 	if(enable)
 	{
 		if (LLAudioEngine::AUDIO_PAUSED == gAudiop->isInternetStreamPlaying())
 		{
 			// 'false' means unpause
-			//gAudiop->pauseInternetStream(false);
 			LLViewerAudio::getInstance()->startInternetStreamWithAutoFade(LLViewerMedia::getParcelAudioURL());
 		}
 		else
@@ -864,18 +845,16 @@ void LLStatusBar::toggleStream(bool enable)
 		LLViewerAudio::getInstance()->stopInternetStreamWithAutoFade();
 	}
 
-	// <FS:Zi> Split up handling cont.
-	// status_bar->mAudioStreamEnabled = enable;
+	// Split up handling cont.
 	mAudioStreamEnabled = enable;
-	// </FS:Zi>
 }
 
 BOOL LLStatusBar::getAudioStreamEnabled() const
 {
 	return mAudioStreamEnabled;
 }
-// ## Zi: Media/Stream separation
 
+// Media/Stream separation
 BOOL can_afford_transaction(S32 cost)
 {
 	return((cost <= 0)||((gStatusBar) && (gStatusBar->getBalance() >=cost)));
@@ -886,12 +865,11 @@ void LLStatusBar::onVolumeChanged(const LLSD& newvalue)
 	refresh();
 }
 
-// <FS:PP> FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
+// FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
 void LLStatusBar::onBandwidthGraphButtonClicked()
 {
 	LLFloaterReg::toggleInstance("lagmeter");
 }
-// </FS:PP> FIRE-6287: Clicking on traffic indicator toggles Lag Meter window
 
 // Implements secondlife:///app/balance/request to request a L$ balance
 // update via UDP message system. JC
@@ -900,20 +878,21 @@ class LLBalanceHandler : public LLCommandHandler
 public:
 	// Requires "trusted" browser/URL source
 	LLBalanceHandler() : LLCommandHandler("balance", UNTRUSTED_BLOCK) { }
+	
 	bool handle(const LLSD& tokens, const LLSD& query_map, LLMediaCtrl* web)
 	{
-		if (tokens.size() == 1
-			&& tokens[0].asString() == "request")
+		if (tokens.size() == 1 && tokens[0].asString() == "request")
 		{
 			LLStatusBar::sendMoneyBalanceRequest();
 			return true;
 		}
+
 		return false;
 	}
 };
+
 // register with command dispatch system
 LLBalanceHandler gBalanceHandler;
-
 
 void LLStatusBar::initParcelIcons()
 {
@@ -924,10 +903,10 @@ void LLStatusBar::initParcelIcons()
 	mParcelIcon[SCRIPTS_ICON] = getChild<LLIconCtrl>("scripts_icon");
 	mParcelIcon[DAMAGE_ICON] = getChild<LLIconCtrl>("damage_icon");
 	mParcelIcon[SEE_AVATARS_ICON] = getChild<LLIconCtrl>("see_avs_icon");
-	// <FS:Ansariel> Pathfinding support
+
+	// Pathfinding support
 	mParcelIcon[PATHFINDING_DIRTY_ICON] = getChild<LLIconCtrl>("pathfinding_dirty_icon");
 	mParcelIcon[PATHFINDING_DISABLED_ICON] = getChild<LLIconCtrl>("pathfinding_disabled_icon");
-	// </FS:Ansariel> Pathfinding support
 
 	mParcelIcon[VOICE_ICON]->setMouseDownCallback(boost::bind(&LLStatusBar::onParcelIconClick, this, VOICE_ICON));
 	mParcelIcon[FLY_ICON]->setMouseDownCallback(boost::bind(&LLStatusBar::onParcelIconClick, this, FLY_ICON));
@@ -936,10 +915,10 @@ void LLStatusBar::initParcelIcons()
 	mParcelIcon[SCRIPTS_ICON]->setMouseDownCallback(boost::bind(&LLStatusBar::onParcelIconClick, this, SCRIPTS_ICON));
 	mParcelIcon[DAMAGE_ICON]->setMouseDownCallback(boost::bind(&LLStatusBar::onParcelIconClick, this, DAMAGE_ICON));
 	mParcelIcon[SEE_AVATARS_ICON]->setMouseDownCallback(boost::bind(&LLStatusBar::onParcelIconClick, this, SEE_AVATARS_ICON));
-	// <FS:Ansariel> Pathfinding support
+
+	// Pathfinding support
 	mParcelIcon[PATHFINDING_DIRTY_ICON]->setMouseDownCallback(boost::bind(&LLStatusBar::onParcelIconClick, this, PATHFINDING_DIRTY_ICON));
 	mParcelIcon[PATHFINDING_DISABLED_ICON]->setMouseDownCallback(boost::bind(&LLStatusBar::onParcelIconClick, this, PATHFINDING_DISABLED_ICON));
-	// </FS:Ansariel> Pathfinding support
 
 	mDamageText->setText(LLStringExplicit("100%"));
 }
@@ -969,12 +948,10 @@ void LLStatusBar::onNavBarShowCoordinatesCtrlChanged()
 
 void LLStatusBar::buildLocationString(std::string& loc_str, bool show_coords)
 {
-	// Ansariel: Use V1 layout for location string in status bar so
-	//           that the most important information dont't get lost:
-	//           First region name, followed by location, maturity
-	//           rating and at the end the parcel description.
-	//LLAgentUI::ELocationFormat format =
-	//	(show_coords ? LLAgentUI::LOCATION_FORMAT_FULL : LLAgentUI::LOCATION_FORMAT_NO_COORDS);
+	// Use V1 layout for location string in status bar so
+	// that the most important information dont't get lost:
+	// First region name, followed by location, maturity
+	// rating and at the end the parcel description.
 	LLAgentUI::ELocationFormat format = LLAgentUI::LOCATION_FORMAT_V1_STATUSBAR;
 
 	if (!LLAgentUI::buildLocationString(loc_str, format))
@@ -994,7 +971,7 @@ void LLStatusBar::setParcelInfoText(const std::string& new_text)
 	LLRect rect = mParcelInfoText->getRect();
 	rect.setOriginAndSize(rect.mLeft, rect.mBottom, new_text_width, rect.getHeight());
 
-	// Ansariel: Recalculate panel size so we are able to click the whole text
+	// Recalculate panel size so we are able to click the whole text
 	LLRect panelParcelInfoRect = mParcelInfoPanel->getRect();
 	LLRect panelBalanceRect = mBalancePanel->getRect();
 	panelParcelInfoRect.mRight = panelParcelInfoRect.mLeft + rect.mRight;
@@ -1042,17 +1019,13 @@ void LLStatusBar::updateParcelInfoText()
 {
 	static LLUICachedControl<bool> show_coords("NavBarShowCoordinates", false);
 
-	// Ansariel: This doesn't make sense at all. The location in the statusbar
-	//           has ever shown coordinates and why should one have to enable
-	//           the navigation bar to configure a setting that has effect on
-	//           the statusbar?
-	// if (show_coords)
-	// {
-		std::string new_text;
-
-		buildLocationString(new_text, show_coords);
-		setParcelInfoText(new_text);
-	// }
+	// This doesn't make sense at all. The location in the statusbar
+	// has ever shown coordinates and why should one have to enable
+	// the navigation bar to configure a setting that has effect on
+	// the statusbar?
+	std::string new_text;
+	buildLocationString(new_text, show_coords);
+	setParcelInfoText(new_text);
 }
 
 void LLStatusBar::updateParcelIcons()
@@ -1061,10 +1034,14 @@ void LLStatusBar::updateParcelIcons()
 
 	LLViewerRegion* agent_region = gAgent.getRegion();
 	LLParcel* agent_parcel = vpm->getAgentParcel();
+
 	if (!agent_region || !agent_parcel)
+	{
 		return;
+	}
 
 	bool allow_voice=FALSE;		// <FS:Zi> Declare here to use it in both if() branches
+
 	if (mShowParcelIcons)
 	{
 		LLParcel* current_parcel;
@@ -1086,10 +1063,13 @@ void LLStatusBar::updateParcelIcons()
 			current_parcel = agent_parcel;
 		}
 
-		// <FS:Zi> allow_voice is now declared outside the if() block
-		//	bool allow_voice	= vpm->allowAgentVoice(agent_region, current_parcel);
+		// Do not show pathfinding icons in OpenSimulator
+		bool is_opensim = false;
+#ifdef OPENSIM
+		is_opensim = LLGridManager::getInstance()->isInOpenSim();
+#endif
+		// allow_voice is now declared outside the if() block
 		allow_voice	= vpm->allowAgentVoice(agent_region, current_parcel);
-		// </FS:Zi>
 		bool allow_fly		= vpm->allowAgentFly(agent_region, current_parcel);
 		bool allow_push		= vpm->allowAgentPush(agent_region, current_parcel);
 		bool allow_build	= vpm->allowAgentBuild(current_parcel); // true when anyone is allowed to build. See EXT-4610.
@@ -1098,18 +1078,20 @@ void LLStatusBar::updateParcelIcons()
 		BOOL see_avatars	= current_parcel->getSeeAVs();
 		bool is_for_sale	= (!current_parcel->isPublic() && vpm->canAgentBuyParcel(current_parcel, false));
 		bool has_pwl		= KCWindlightInterface::instance().getWLset();
-		// <FS:CR> FIRE-5118 - Lightshare support
+
+		// FIRE-5118 - Lightshare support
 		bool has_lightshare	= FSLightshare::getInstance()->getState();
-		// </FS:CR>
-		// <FS:Ansariel> Pathfinding support
+
+		// Pathfinding support
 		bool pathfinding_dynamic_enabled = agent_region->dynamicPathfindingEnabled();
 
-		// <FS:Zi> Pathfinding rebake functions
+		// Pathfinding rebake functions
 		bool pathfinding_navmesh_dirty=LLMenuOptionPathfindingRebakeNavmesh::getInstance()->isRebakeNeeded();
 		F32 pathfinding_dirty_icon_alpha=1.0;
+
 		if(LLMenuOptionPathfindingRebakeNavmesh::getInstance()->isRebaking())
 		{
-			// <FS:LO> FIRE-7639 - Stop the blinking after a while
+			// FIRE-7639 - Stop the blinking after a while
 			if(mRebakeStuck)
 			{
 				pathfinding_dirty_icon_alpha = 0.5;
@@ -1118,10 +1100,9 @@ void LLStatusBar::updateParcelIcons()
 			{
 				pathfinding_dirty_icon_alpha=mPathfindingFlashOn ? 1.0 : 0.25;
 			}
-			// </FS:LO>
+
 			pathfinding_navmesh_dirty=true;
 		}
-		// </FS:Zi>
 
 		// Most icons are "block this ability"
 		mParcelIcon[VOICE_ICON]->setVisible(   !allow_voice );
@@ -1131,19 +1112,20 @@ void LLStatusBar::updateParcelIcons()
 		mParcelIcon[SCRIPTS_ICON]->setVisible( !allow_scripts );
 		mParcelIcon[DAMAGE_ICON]->setVisible(  allow_damage );
 		mParcelIcon[SEE_AVATARS_ICON]->setVisible(!see_avatars);
-		// <FS:Ansariel> Pathfinding support
+		
+		// Pathfinding support
 		mParcelIcon[PATHFINDING_DIRTY_ICON]->setVisible(pathfinding_navmesh_dirty);
 		mParcelIcon[PATHFINDING_DIRTY_ICON]->setColor(LLColor4::white % pathfinding_dirty_icon_alpha);
-		mParcelIcon[PATHFINDING_DISABLED_ICON]->setVisible(!pathfinding_navmesh_dirty && !pathfinding_dynamic_enabled);
-		// </FS:Ansariel> Pathfinding support
+		mParcelIcon[PATHFINDING_DISABLED_ICON]->setVisible(!pathfinding_navmesh_dirty && !pathfinding_dynamic_enabled && !is_opensim);
+
 		mDamageText->setVisible(allow_damage);
 		mBuyParcelBtn->setVisible(is_for_sale);
 		mPWLBtn->setVisible(has_pwl);
 		mPWLBtn->setEnabled(has_pwl);
-		// <FS:CR> FIRE-5118 - Lightshare support
+		
+		// FIRE-5118 - Lightshare support
 		mLightshareBtn->setVisible(has_lightshare);
 		mLightshareBtn->setEnabled(has_lightshare);
-		// </FS:CR>
 	}
 	else
 	{
@@ -1151,12 +1133,14 @@ void LLStatusBar::updateParcelIcons()
 		{
 			mParcelIcon[i]->setVisible(false);
 		}
+
 		mDamageText->setVisible(false);
 		mBuyParcelBtn->setVisible(false);
 		mPWLBtn->setVisible(false);
-		// <FS:CR> FIRE-5118 - Lightshare support
+		
+		// FIRE-5118 - Lightshare support
 		mLightshareBtn->setVisible(false);
-		// </FS:CR>
+
 		allow_voice	= vpm->allowAgentVoice();	// <FS:Zi> update allow_voice even if icons are hidden
 	}
 
@@ -1166,11 +1150,12 @@ void LLStatusBar::updateParcelIcons()
 
 void LLStatusBar::updateHealth()
 {
-	// *FIXME: Status bar owns health information, should be in agent
+	// FIXME: Status bar owns health information, should be in agent
 	if (mShowParcelIcons && gStatusBar)
 	{
 		static S32 last_health = -1;
 		S32 health = gStatusBar->getHealth();
+		
 		if (health != last_health)
 		{
 			std::string text = llformat("%d%%", health);
@@ -1184,11 +1169,10 @@ void LLStatusBar::layoutParcelIcons()
 {
 	// TODO: remove hard-coded values and read them as xml parameters
 	static const int FIRST_ICON_HPAD = 2; // 2 padding; See also ICON_HEAD
-	// Kadah - not needed static const int LAST_ICON_HPAD = 11;
 
-	// Ansariel: Changed order to be more Viewer 1 like and keep important
-	//           information visible: Parcel power icons first, then parcel
-	//           info text!
+	// Changed order to be more Viewer 1 like and keep important
+	// information visible: Parcel power icons first, then parcel
+	// info text!
 	S32 left = FIRST_ICON_HPAD;
 
 	left = layoutWidget(mDamageText, left);
@@ -1197,11 +1181,12 @@ void LLStatusBar::layoutParcelIcons()
 	{
 		left = layoutWidget(mParcelIcon[i], left);
 	}
+
 	left = layoutWidget(mBuyParcelBtn, left);
 	left = layoutWidget(mPWLBtn, left);
-	// <FS:CR> FIRE-5118 - Lightshare support
+	
+	// FIRE-5118 - Lightshare support
 	left = layoutWidget(mLightshareBtn, left);
-	// </FS:CR>
 
 	LLRect infoTextRect = mParcelInfoText->getRect();
 	infoTextRect.mLeft = left;
@@ -1245,6 +1230,7 @@ void LLStatusBar::onParcelIconClick(EParcelIcon icon)
 	case SCRIPTS_ICON:
 	{
 		LLViewerRegion* region = gAgent.getRegion();
+	
 		if(region && region->getRegionFlags() & REGION_FLAGS_ESTATE_SKIP_SCRIPTS)
 		{
 			LLNotificationsUtil::add("ScriptsStopped");
@@ -1265,17 +1251,15 @@ void LLStatusBar::onParcelIconClick(EParcelIcon icon)
 	case SEE_AVATARS_ICON:
 		LLNotificationsUtil::add("SeeAvatars");
 		break;
-	// <FS:Ansariel> Pathfinding support
+	// Pathfinding support
 	case PATHFINDING_DIRTY_ICON:
-		// <FS:Zi> Pathfinding rebake functions
-		// LLNotificationsUtil::add("PathfindingDirty");
+		// Pathfinding rebake functions
 		LLNotificationsUtil::add("PathfindingDirty",LLSD(),LLSD(),boost::bind(&LLStatusBar::rebakeRegionCallback,this,_1,_2));
-		// </FS:Zi>
 		break;
 	case PATHFINDING_DISABLED_ICON:
 		LLNotificationsUtil::add("DynamicPathfindingDisabled");
 		break;
-	// </FS:Ansariel> Pathfinding support
+	// Pathfinding support
 	case ICON_COUNT:
 		break;
 	// no default to get compiler warning when a new icon gets added
@@ -1322,7 +1306,7 @@ void LLStatusBar::onInfoButtonClicked()
 	{
 		return;
 	}
-	//LLFloaterSidePanelContainer::showPanel("panel_places", LLSD().with("type", "agent"));
+
 	LLFloaterReg::showInstance("about_land");
 }
 
@@ -1331,12 +1315,11 @@ void LLStatusBar::onParcelWLClicked()
 	KCWindlightInterface::instance().onClickWLStatusButton();
 }
 
-// <FS:CR> FIRE-5118 - Lightshare support
+// FIRE-5118 - Lightshare support
 void LLStatusBar::onLightshareClicked()
 {
 	FSLightshare::getInstance()->processLightshareRefresh();
 }
-// </FS:CR>
 
 void LLStatusBar::onBuyLandClicked()
 {
@@ -1344,10 +1327,10 @@ void LLStatusBar::onBuyLandClicked()
 	{
 		return;
 	}
+
 	handle_buy_land();
 }
 
-// hack -KC
 void LLStatusBar::setBackgroundColor( const LLColor4& color )
 {
 	LLPanel::setBackgroundColor(color);
@@ -1374,7 +1357,7 @@ void LLStatusBar::updateNetstatVisibility(const LLSD& data)
 	mBalancePanel->setRect(rect);
 }
 
-// <FS:PP> Option to hide volume controls (sounds, media, stream) in upper right
+// Option to hide volume controls (sounds, media, stream) in upper right
 void LLStatusBar::updateVolumeControlsVisibility(const LLSD& data)
 {
 	const S32 cVolumeIconsWidth = mVolumeIconsWidth;
@@ -1393,9 +1376,8 @@ void LLStatusBar::updateVolumeControlsVisibility(const LLSD& data)
 	rect.translate(cVolumeIconsWidth * translateFactor, 0);
 	mBalancePanel->setRect(rect);
 }
-// </FS:PP>
 
-// <FS:Zi> Pathfinding rebake functions
+// Pathfinding rebake functions
 BOOL LLStatusBar::rebakeRegionCallback(const LLSD& notification,const LLSD& response)
 {
 	std::string newSetName=response["message"].asString();
@@ -1407,6 +1389,6 @@ BOOL LLStatusBar::rebakeRegionCallback(const LLSD& notification,const LLSD& resp
 			LLMenuOptionPathfindingRebakeNavmesh::getInstance()->rebakeNavmesh();
 		return TRUE;
 	}
+
 	return FALSE;
 }
-// </FS:Zi>
