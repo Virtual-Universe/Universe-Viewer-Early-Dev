@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater title="Sélectionnez une touche" name="modal container">
-	<text name="Save item as:">Appuyez sur la touche qui contrôlera l'activation et la désactivation du chat vocal.</text>
-	<button label="Annuler" label_selected="Annuler" name="Cancel"/>
-</floater>
