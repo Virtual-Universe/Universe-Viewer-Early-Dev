@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel name="panel_group_notify">
-	<panel name="header">
-		<text name="title" value="Отправитель / Группа"/>
-	</panel>
-	<text name="attachment" value="Вложение"/>
-</panel>
