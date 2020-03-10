@@ -1214,10 +1214,10 @@ void LLPanelScriptLimitsAttachment::setAttachmentDetails(LLSD content)
 
 			// Ansariel: Crude hack to make the bridge display the proper attachment spot
 			//           and not "MissingString(Bad attachment point)"
-			if (humanReadableLocation == "MissingString(Bad attachment point)" && (name.find("Angstrom LSL Bridge") != std::string::npos || name == "Rock - medium, round"))
+			if (humanReadableLocation == "MissingString(Bad attachment point)" && (name.find("Universe LSL Bridge") != std::string::npos || name == "Rock - medium, round"))
 			{
 				humanReadableLocation = LLTrans::getString("Bridge");
-				name = "Angstrom LSL Bridge";
+				name = "Universe LSL Bridge";
 			}
 			
 			LLSD element;

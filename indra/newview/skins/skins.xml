@@ -30,9 +30,9 @@
 
     <map>
       <key>name</key>
-            <string>Angstrom</string>
+            <string>Universe</string>
       <key>folder</key>
-            <string>angstrom</string>
+            <string>universe</string>
       <key>themes</key>
       <array>
         <map>

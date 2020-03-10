@@ -44,7 +44,7 @@
 #include "llviewerinventory.h"
 #include "llinventorybridge.h"
 
-//#define ROOT_FIRESTORM_FOLDER 	"#Angstrom" //moved to llinventoryfunctions.h
+//#define ROOT_FIRESTORM_FOLDER 	"#Universe" //moved to llinventoryfunctions.h
 #define ROOT_AO_FOLDER			"#AO"
 #include <boost/graph/graph_concepts.hpp>
 

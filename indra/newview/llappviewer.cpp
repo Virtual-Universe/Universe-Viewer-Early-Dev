@@ -744,7 +744,7 @@ bool LLAppViewer::init()
 
 	// Need to do this initialization before we do anything else, since anything
 	// that touches files should really go through the lldir API
-	gDirUtilp->initAppDirs("Angstrom");
+	gDirUtilp->initAppDirs("Universe");
 	// set skin search path to default, will be overridden later
 	// this allows simple skinned file lookups to work
 // [SL:KB] - Patch: Viewer-Skins | Checked: 2012-12-26 (Catznip-3.4)
@@ -801,7 +801,7 @@ bool LLAppViewer::init()
 
                 LLFile::remove(gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, "releases.xml"));
                 LLFile::remove(gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, "client_list_v2.xml"));
-                LLFile::remove(gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, "settings_angstrom.xml"));
+                LLFile::remove(gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, "settings_universe.xml"));
                 LLFile::remove(gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, "settings_phoenix.xml"));
                 LLFile::remove(gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, "settings_hybrid.xml"));
                 LLFile::remove(gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, "settings_v3.xml"));
@@ -2304,15 +2304,15 @@ void errorCallback(const std::string &error_string)
 	map["ERROR_DETAILS"]=error_string;
 	std::string error_display_string=LLTrans::getString("MBApplicationErrorDetails",map);
 	
-	// <FS:Ansariel> If we crash before loading the configuration, LLTrans
-	//               won't be able to find the localized string, so we
-	//               fall back to the English version instead of showing
-	//               a dialog saying "MissingString("<LocalizationStringId>".
+	// If we crash before loading the configuration, LLTrans
+	// won't be able to find the localized string, so we
+	// fall back to the English version instead of showing
+	// a dialog saying "MissingString("<LocalizationStringId>".
 	std::string caption = LLTrans::getString("MBApplicationError");
 
 	if (error_display_string.find("MissingString(") != std::string::npos)
 	{
-		error_display_string = "We are sorry, but Angstrom has crashed and needs to be closed. If you see this issue happening repeatedly, please contact our support team and submit the following message:\n\n[ERROR_DETAILS]";
+		error_display_string = "We are sorry, but Universe Viewer has crashed and needs to be closed. If you see this issue happening repeatedly, please contact our support team and submit the following message:\n\n[ERROR_DETAILS]";
 		LLStringUtil::format(error_display_string, map);
 	}
 	if (caption.find("MissingString(") != std::string::npos)
@@ -2362,12 +2362,12 @@ bool LLAppViewer::initLogging()
 
 	// Remove the last ".old" log file.
 	std::string old_log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-							     "Angstrom.old");
+							     "Universe.old");
 	LLFile::remove(old_log_file);
 
 	// Rename current log file to ".old"
 	std::string log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-							     "Angstrom.log");
+							     "Universe.log");
 	LLFile::rename(log_file, old_log_file);
 
 	// Set the log file to SecondLife.log
@@ -2636,7 +2636,7 @@ bool LLAppViewer::initConfiguration()
 	//Wolfspirit: Temporary fix for NOT loading settings_minimal.xml
 	if (gSavedSettings.getBOOL("FirstRunThisInstall"))
 	{
-		gSavedSettings.setString("SessionSettingsFile", "settings_angstrom.xml");
+		gSavedSettings.setString("SessionSettingsFile", "settings_universe.xml");
 
 		// Note that the "FirstRunThisInstall" settings is currently unused.
 		gSavedSettings.setBOOL("FirstRunThisInstall", FALSE);
@@ -4504,7 +4504,7 @@ void LLAppViewer::badNetworkHandler()
 		"the issue. \n"
 		" \n"
 		"If the problem continues, see the Tech Support FAQ at: \n"
-		"https://bitbucket.org/nhede/angstrom2/wiki/Home";
+		"https://wiki.virtual-planets.org/Home";
 	forceDisconnect(message.str());
 	
 	LLApp::instance()->writeMiniDump();

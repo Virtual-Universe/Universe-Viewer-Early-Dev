@@ -140,8 +140,8 @@ endif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 # Default deploy grid
 set(GRID agni CACHE STRING "Target Grid")
 
-set(VIEWER ON CACHE BOOL "Build Angstrom viewer.")
-#set(VIEWER_CHANNEL "Angstrom-Private" CACHE STRING "Viewer Channel Name")
+set(VIEWER ON CACHE BOOL "Build Universe viewer.")
+#set(VIEWER_CHANNEL "Universe-Private" CACHE STRING "Viewer Channel Name")
 #set(VIEWER_LOGIN_CHANNEL ${VIEWER_CHANNEL} CACHE STRING "Fake login channel for A/B Testing")
 
 # Flickr API keys.

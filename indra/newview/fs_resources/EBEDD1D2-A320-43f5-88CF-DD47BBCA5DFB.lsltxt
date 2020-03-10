@@ -1,5 +1,5 @@
 //http bridge script v.2.3
-//Angstrom
+//Universe
 //Tozh Taurog, Arrehn Oberlander, Tonya Souther
 
 //
@@ -95,7 +95,7 @@
         integer n = llGetInventoryNumber(INVENTORY_SCRIPT);
         if (n > 1)
         {
-            llOwnerSay("NOTICE: One or more scripts have been added to your Angstrom bridge! If you did not expect this message, use the Angstrom 'Avatar/Avatar Health/Recreate Bridge' menu option re-create your bridge now.");
+            llOwnerSay("NOTICE: One or more scripts have been added to your Universe bridge! If you did not expect this message, use the Universe 'Avatar/Avatar Health/Recreate Bridge' menu option re-create your bridge now.");
             llSleep(1.0);
             while(n)
             {
@@ -370,7 +370,7 @@ integer lookupTag(key agent)
     } 
        
     tagInterestQ+=[agent];
-    llRegionSayTo(agent,hashChannel(agent),llList2CSV([protoTag,myTagIdx,tagChan])); // protoString, Angstrom IDX
+    llRegionSayTo(agent,hashChannel(agent),llList2CSV([protoTag,myTagIdx,tagChan])); // protoString, Universe IDX
     return 0;
 }  
     

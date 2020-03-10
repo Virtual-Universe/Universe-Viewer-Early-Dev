@@ -448,8 +448,8 @@
      left="1"
      right="-1"
      follows="all"
-     label="Angstrom"
-     name="tab-angstrom" >
+     label="Universe"
+     name="tab-universe" >
         <text
          top_pad="10"
          type="string"

@@ -295,7 +295,7 @@ std::string LLDir::buildSLOSCacheDir() const
 	}
 	else
 	{
-		res = add(getOSCacheDir(), "Angstrom");
+		res = add(getOSCacheDir(), "Universe");
 	}
 	return res;
 }

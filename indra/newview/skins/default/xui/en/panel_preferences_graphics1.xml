@@ -216,7 +216,7 @@
          layout="topleft"
          left="10"
          name="Fullscreen Mode"
-         tool_tip="Run Angstrom in Fullscreen mode. A restart is required to change mode."
+         tool_tip="Run Universe Viewer in Fullscreen mode. A restart is required to change mode."
          top="0"
          width="280" />
         <text

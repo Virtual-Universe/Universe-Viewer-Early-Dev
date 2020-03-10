@@ -7,8 +7,8 @@
 
 	<!-- Default Args - these arguments will be replaced in all strings -->
 	<string name="SECOND_LIFE">[CURRENT_GRID]</string>
-	<string name="APP_NAME">Angstrom</string>
-	<string name="CAPITALIZED_APP_NAME">ANGSTROM</string>
+	<string name="APP_NAME">Universe</string>
+	<string name="CAPITALIZED_APP_NAME">UNIVERSE</string>
 	<string name="SECOND_LIFE_GRID">Second Life Grid</string>
 	<string name="SUPPORT_SITE">Second Life Support Portal</string>
 	<string name="DOWNLOAD_URL">http://www.firestormviewer.org/downloads</string>
@@ -3230,7 +3230,7 @@ Drag folders to this area and click "Send to Marketplace" to list them for sale 
 	<string name="InvFolder All">All</string>
 
 	<!-- Virtual Firestorm system folders -->
-	<string name="InvFolder #Angstrom">#Angstrom</string>
+	<string name="InvFolder #Universe">#Universe</string>
 	<string name="InvFolder #Phoenix">#Phoenix</string>
 	<string name="InvFolder #RLV">#RLV</string>
 	
@@ -3484,7 +3484,7 @@ Drag folders to this area and click "Send to Marketplace" to list them for sale 
 	<string name="PanelContentsNewScript">New Script</string>
 
   <!-- panel preferences general -->
-  <string name="BusyModeResponseDefault">The Resident you messaged is in &apos;unavailable mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their Angstrom Viewer&apos;s instant message panel for later viewing.</string>
+  <string name="BusyModeResponseDefault">The Resident you messaged is in &apos;unavailable mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their Universe Viewer&apos;s instant message panel for later viewing.</string>
 
 	<!-- Mute -->
 	<string name="MuteByName">(By name)</string>

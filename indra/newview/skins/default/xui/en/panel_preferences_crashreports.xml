@@ -16,7 +16,7 @@
      top="30"
      width="250"
      height="16"
-     label="Send crash reports to https://bitbucket.org/nhede/angstrom"
+     label="Send crash reports to https://github.com/Virtual-Universe/Universe-Viewer-Early-Dev/issues"
      name="checkSendCrashReports"
      enabled="false" />
 

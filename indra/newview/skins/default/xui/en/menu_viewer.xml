@@ -1893,31 +1893,22 @@
         </menu_item_check>
         
         <menu_item_call
-         label="Angstrom Wiki"
-         name="Angstrom Wiki"
+         label="Virtual Universe Wiki"
+         name="Virtual Universe Wiki"
 	     shortcut="F1">
              <menu_item_call.on_click
              function="PromptShowURL"
              name="script_library_url"
-             parameter="WebLaunchExternalTarget,https://bitbucket.org/nhede/angstrom2/wiki/Home" />
+             parameter="WebLaunchExternalTarget,https://wiki.virtual-planets.org" />
        </menu_item_call>
 	   
         <menu_item_call
-         label="Join Firestorm Support Group"
+         label="Join Virtual Universe Support Group"
          name="firestorm_support_group">
              <menu_item_call.on_click
              function="Advanced.WebBrowserTest"
-             parameter="http://wiki.phoenixviewer.com/firestorm_support_groups_join" />
+             parameter="http://wiki.virtual-planets.org/universe_support_groups_join" />
         </menu_item_call>
-		
-<!--       <menu_item_call
-         label="Second Life Help"
-         name="Second Life Help">
-             <menu_item_call.on_click
-             function="PromptShowURL"
-             name="script_library_url"
-             parameter="WebLaunchExternalTarget,https://support.secondlife.com/" />
-        </menu_item_call>-->
         <menu_item_separator name="grid_help_seperator"/>
         <menu_item_call
          label="[CURRENT_GRID] Help"
@@ -1933,14 +1924,6 @@
              function="ShowHelp"
              parameter="grid_about" />
         </menu_item_call>
-<!--        <menu_item_call
-         label="Tutorial"
-         name="Tutorial">
-            <menu_item_call.on_click
-             function="Floater.Show"
-             parameter="hud" />
-        </menu_item_call>-->
-
         <menu_item_separator/>
 		<menu_item_call
              label="Check Grid status"
@@ -2381,9 +2364,7 @@
                  function="View.CheckShowHoverTips" />
             </menu_item_check>
         </menu>
-
         </menu>
-
         <menu
          create_jump_keys="true"
          label="Rendering Types"
@@ -2671,7 +2652,6 @@
                  parameter="" />
             </menu_item_call>
         <menu_item_separator/>
-
         <menu
          create_jump_keys="true"
          label="Shortcuts"
@@ -2715,8 +2695,6 @@
                  function="ToggleControl"
                  parameter="UseDebugMenus" />
             </menu_item_check>
-
-          <!--   	//[FIX FIRE-1927 - enable DoubleClickTeleport shortcut : SJ] -->
           <menu_item_check
            label="DoubleClick Teleport"
            name="DoubleClick Teleport"
@@ -2727,10 +2705,7 @@
             <on_click
                function="Advanced.ToggleDoubleClickTeleport"/>
           </menu_item_check>
-          <!--   	//[FIX FIRE-1927 - enable DoubleClickTeleport shortcut : SJ] -->
-
           <menu_item_separator/>
-
             <menu_item_check
              label="Always Run"
              name="Always Run"
@@ -2751,9 +2726,7 @@
                 <menu_item_check.on_enable
                  function="Agent.enableFlying" />
             </menu_item_check>
-
             <menu_item_separator/>
-
             <menu_item_call
              label="Close Window"
              name="Close Window"
@@ -2772,9 +2745,7 @@
                 <menu_item_call.on_enable
                  function="File.EnableCloseAllWindows" />
             </menu_item_call>
-
             <menu_item_separator/>
-
             <menu_item_call
              label="Snapshot to Disk"
              name="Snapshot to Disk"
@@ -2783,9 +2754,7 @@
                 <menu_item_call.on_click
                  function="File.TakeSnapshotToDisk" />
             </menu_item_call>
-
             <menu_item_separator/>
-
             <menu_item_call
              label="Mouselook"
              name="Mouselook"
@@ -2829,9 +2798,7 @@
                 <menu_item_call.on_enable
                  function="View.EnableLastChatter" />
             </menu_item_call>
-
             <menu_item_separator/>
-
             <menu_item_call
              label="Zoom In"
              name="Zoom In"
@@ -2853,10 +2820,8 @@
                 <menu_item_call.on_click
                  function="View.ZoomOut" />
             </menu_item_call>
-        </menu> <!--Shortcuts-->
-
+        </menu>
         <menu_item_separator/>
-
         <menu_item_check
          label="Fly Override"
          name="Fly Override"
@@ -2896,24 +2861,7 @@
              function="ToggleControl"
              parameter="QAMode" />
         </menu_item_check>
-        
-        <!-- Proof of concept V1 menu toggle entry, Disabled for release 
-        
-     <menu_item_check
-         label="Use V1 Menus"
-         name="V1 Menus">
-            <menu_item_check.on_check
-             function="CheckControl"
-             parameter="FSUseV1Menus" />
-            <menu_item_check.on_click
-             function="ToggleControl"
-             parameter="FSUseV1Menus" />
-        </menu_item_check>
-
-        END: V1 menu toggle entry  -WoLf -->
-        
     </menu>
-
     <menu
      create_jump_keys="true"
      label="Develop"
@@ -3004,9 +2952,7 @@
               <on_visible
                 function="Develop.SetTexFetchDebugger" />
             </menu_item_call>
-          
-            <menu_item_separator/>
-
+          <menu_item_separator/>
             <menu_item_check
              label="Region Debug Console"
              name="Region Debug Console"
@@ -3019,9 +2965,7 @@
                function="Floater.Toggle"
                parameter="region_debug_console" />
             </menu_item_check>
-            
             <menu_item_separator/>
-
             <menu_item_call
              label="Region Info to Debug Console"
              name="Region Info to Debug Console">
@@ -3043,9 +2987,7 @@
                  function="Advanced.DumpInfoToConsole"
                  parameter="capabilities" />
             </menu_item_call>
-
             <menu_item_separator/>
-
             <menu_item_check
              label="Camera"
              name="Camera">
@@ -3168,9 +3110,7 @@
                function="ToggleControl"
                parameter="DebugShowPrivateMem" />
             </menu_item_check>
-
             <menu_item_separator/>
-
             <menu_item_check
              label="Show Updates to Objects"
              name="Show Updates"
@@ -3182,9 +3122,7 @@
                  function="Advanced.ToggleShowObjectUpdates" />
             </menu_item_check>
         </menu>
-
         <menu_item_separator/>
-
         <menu
          create_jump_keys="true"
          label="Force an Error"
@@ -3613,7 +3551,6 @@
                  function="Advanced.EnableObjectObjectOcclusion" />
             </menu_item_check>
           <menu_item_separator />
-
           <menu_item_check
                        label="Lighting and Shadows"
                        name="Lighting and Shadows">
@@ -3651,7 +3588,6 @@
                  function="Advanced.EnableRenderDeferredOptions" />
           </menu_item_check>
           <menu_item_separator />
-
           <menu_item_check
              label="Debug GL"
              name="Debug GL">
@@ -3763,7 +3699,6 @@
                  parameter="RenderHoverGlowEnable" />
             </menu_item_check>
         </menu>
-
         <menu
          create_jump_keys="true"
          label="Network"
@@ -3779,9 +3714,7 @@
                  function="ToggleControl"
                  parameter="AgentPause" />
             </menu_item_check>
-
             <menu_item_separator/>
-
             <menu_item_call
              label="Enable Message Log"
              name="Enable Message Log">
@@ -3794,9 +3727,7 @@
                 <menu_item_call.on_click
                  function="Advanced.DisableMessageLog" />
             </menu_item_call>
-
             <menu_item_separator/>
-
             <menu_item_check
              label="Velocity Interpolate Objects"
              name="Velocity Interpolate Objects">
@@ -3817,9 +3748,7 @@
                  function="ToggleControl"
                  parameter="PingInterpolate" />
             </menu_item_check>
-
             <menu_item_separator/>
-
             <menu_item_call
              label="Drop a Packet"
              name="Drop a Packet"
@@ -3834,7 +3763,6 @@
             <menu_item_call.on_click
              function="Advanced.DumpScriptedCamera" />
         </menu_item_call>
-
         <menu
          create_jump_keys="true"
          label="Recorder"
@@ -3878,7 +3806,6 @@
                  parameter="stop record" />
             </menu_item_call>
         </menu>
-
         <menu
          create_jump_keys="true"
          label="World"
@@ -3997,7 +3924,6 @@
                  parameter="DoubleClickTeleport" />
             </menu_item_check>
             <menu_item_separator />
-
             <menu_item_check
              label="Debug SelectMgr"
              name="Debug SelectMgr">
@@ -4310,18 +4236,6 @@
                  function="Advanced.ToggleInfoDisplay"
                  parameter="agent target" />
             </menu_item_check>
-<!-- Appears not to exist anymore
-            <menu_item_check
-             label="Debug Rotation"
-             name="Debug Rotation">
-                <menu_item_check.on_check
-                 function="CheckControl"
-                 parameter="DebugAvatarRotation" />
-                <menu_item_check.on_click
-                 function="ToggleControl"
-                 parameter="DebugAvatarRotation" />
-            </menu_item_check> -->
--->
             <menu_item_call
              label="Dump Attachments"
              name="Dump Attachments">
@@ -4350,7 +4264,6 @@
 			</menu_item_call>
 		</menu>
         <menu_item_separator/>
-
         <menu_item_check
          label="HTTP Textures"
          name="HTTP Textures">
@@ -4377,14 +4290,12 @@
             <menu_item_call.on_click
              function="Advanced.CompressImage" />
         </menu_item_call>
-
       <menu_item_call
          label="Enable Visual Leak Detector"
          name="Enable Visual Leak Detector">
         <menu_item_call.on_click
            function="Advanced.ToggleVisualLeakDetector" />
         </menu_item_call>
-      
         <menu_item_check
          label="Output Debug Minidump"
          name="Output Debug Minidump">
@@ -4461,9 +4372,7 @@
              parameter="4" />
           </menu_item_check>
        </menu>
-
         <menu_item_separator/>
-
         <menu_item_call
          label="Request Admin Status"
          name="Request Admin Options"
@@ -4617,8 +4526,7 @@
              function="IsGodCustomerService" />
         </menu_item_call>
     </menu>
-    
-    
+
     <!-- God Menu -->
     
     <menu
@@ -4815,9 +4723,7 @@
                      name="PublicIssueTrackerHelp_url"
                      parameter="WebLaunchPublicIssueHelp,http://wiki.secondlife.com/wiki/Issue_tracker" />
                 </menu_item_call>
-
                 <menu_item_separator/>
-
                 <menu_item_call
                  label="Bug Reporting 101"
                  name="Bug Reporing 101">

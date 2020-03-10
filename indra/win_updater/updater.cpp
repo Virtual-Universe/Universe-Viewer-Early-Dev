@@ -385,7 +385,7 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 	//EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dev_mode);
 	
 	gWindow = CreateWindowEx(NULL, win_class_name, 
-		L"Angstrom Updater",
+		L"Universe Updater",
 		WS_OVERLAPPEDWINDOW, 
 		CW_USEDEFAULT, 
 		CW_USEDEFAULT, 
@@ -421,7 +421,7 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 		return 1;
 	}
     std::string update_exec_path(temp_path);
-	update_exec_path.append("Angstrom_Updater.exe");
+	update_exec_path.append("Universe_Updater.exe");
 
 	WCHAR update_uri[4096];
     mbstowcs(update_uri, gUpdateURL, sizeof(update_uri));
@@ -448,11 +448,11 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 	if (gTotalBytesRead < (1024 * 1024) && ! cancelled)
 	{
 		MessageBox(gWindow,
-			L"The Angstrom auto-update has failed.\n"
+			L"The Universe Viewer auto-update has failed.\n"
 			L"The problem may be caused by other software installed \n"
 			L"on your computer, such as a firewall.\n"
-			L"Please visit https://bitbucket.org/nhede/angstrom2/ \n"
-			L"to download the latest version of Angstrom.\n",
+			L"Please visit https://virtual-planets.org/downloads/ \n"
+			L"to download the latest version of Universe Viewer.\n",
 			NULL, MB_OK);
 		return 1;
 	}
@@ -466,7 +466,7 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 	if (!success)
 	{
 		MessageBox(gWindow, 
-			L"Angstrom download failed.\n"
+			L"Universe download failed.\n"
 			L"Please try again later.", 
 			NULL, MB_OK);
 		return 1;

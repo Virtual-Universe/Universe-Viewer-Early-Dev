@@ -15,7 +15,7 @@
     </panel.string>
 
 <tab_container
- label="Angstrom Prefs"
+ label="Universe Prefs"
  layout="topleft"
  follows="all"
  top="5"
@@ -1003,7 +1003,7 @@ Hover your mouse cursor over UUID field to show its default value.
          left="5"
          height="14"
          width="150"
-         tool_tip="Sound UUID played on default Angstrom alerts."
+         tool_tip="Sound UUID played on default Universe alerts."
          name="textFSSndAlert">
             Default alert:
         </text>

@@ -71,7 +71,7 @@ LLDir_Mac::LLDir_Mac()
 	//CFStringRef		stringRef = NULL;
 	//OSStatus		error = noErr;
 	//FSRef			fileRef;
-	//CFStringRef		secondLifeString = CFSTR("Angstrom");
+	//CFStringRef		secondLifeString = CFSTR("Universe");
 	
 	//mainBundleRef = CFBundleGetMainBundle();
 		
@@ -79,7 +79,7 @@ LLDir_Mac::LLDir_Mac()
 	
 	//if (executableURLRef != NULL)
 
-    const std::string     secondLifeString = "Angstrom";
+    const std::string     secondLifeString = "Universe";
     
     std::string *executablepathstr = getSystemExecutableFolder();
 
@@ -173,7 +173,7 @@ LLDir_Mac::LLDir_Mac()
 		if (error == noErr)
 		{
 			FSRefToLLString(&cacheDirRef, mOSCacheDir);
-			(void)CFCreateDirectory(&cacheDirRef, CFSTR("Angstrom"),NULL);
+			(void)CFCreateDirectory(&cacheDirRef, CFSTR("Universe"),NULL);
 #endif
             mOSCacheDir = *cachedir;
             //SPATTERS TODO:  This changes from ~/Library/Cache/Secondlife to ~/Library/Cache/com.app.secondlife/Secondlife.  Last dir level could go away.

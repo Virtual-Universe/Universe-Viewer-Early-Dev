@@ -5,10 +5,10 @@
   <array count="31" name="allObjects">
     <object class="IBCarbonMenu" id="181">
       <string name="name">_NSAppleMenu</string>
-      <string name="title">Angstrom</string>
+      <string name="title">Universe</string>
       <array count="1" name="items">
         <object class="IBCarbonMenuItem" id="183">
-          <string name="title">About Angstrom</string>
+          <string name="title">About Universe</string>
           <boolean name="disabled">TRUE</boolean>
           <boolean name="updateSingleItem">TRUE</boolean>
           <int name="keyEquivalentModifier">0</int>
@@ -176,7 +176,7 @@
     <reference idRef="190"/>
     <reference idRef="201"/>
     <object class="IBCarbonMenuItem" id="182">
-      <string name="title">Angstrom</string>
+      <string name="title">Universe</string>
       <reference name="submenu" idRef="181"/>
     </object>
     <reference idRef="148"/>

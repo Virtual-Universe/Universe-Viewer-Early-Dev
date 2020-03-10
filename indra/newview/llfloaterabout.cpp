@@ -284,7 +284,7 @@ LLSD LLFloaterAbout::getInfo()
 
 
 	//[FIRE 3113 : SJ] Added Settingsfile to info
-	if (gSavedSettings.getString("SessionSettingsFile") == "settings_angstrom.xml") info["MODE"] = "Angstrom";
+	if (gSavedSettings.getString("SessionSettingsFile") == "settings_universe.xml") info["MODE"] = "Universe";
 	else if (gSavedSettings.getString("SessionSettingsFile") == "settings_phoenix.xml") info["MODE"] = "Phoenix";
 	else if (gSavedSettings.getString("SessionSettingsFile") == "settings_v3.xml") info["MODE"] = "V3";
 	else if (gSavedSettings.getString("SessionSettingsFile") == "settings_hybrid.xml") info["MODE"] = "Hybrid";
@@ -397,19 +397,6 @@ LLSD LLFloaterAbout::getInfo()
 
     return info;
 }
-
-/*static std::string get_viewer_release_notes_url()
-{
-	// return a URL to the release notes for this viewer, such as:
-	// http://wiki.secondlife.com/wiki/Release_Notes/Second Life Beta Viewer/2.1.0
-	//std::string url = LLTrans::getString("RELEASE_NOTES_BASE_URL");
-	//if (! LLStringUtil::endsWith(url, "/"))
-	//	url += "/";
-	//url += LLVersionInfo::getChannel() + "/";
-	//url += LLVersionInfo::getShortVersion();
-	std::string url = "https://bitbucket.org/nhede/angstrom2/wiki/angstrom_change_log";
-	return LLWeb::escapeURL(url);
-}*/
 
 class LLFloaterAboutListener: public LLEventAPI
 {

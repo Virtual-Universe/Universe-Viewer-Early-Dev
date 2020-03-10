@@ -10,7 +10,7 @@
  label="UI-Pref"
  name="Display panel">
 <tab_container
- label="Angstrom Prefs"
+ label="Universe Prefs"
  layout="topleft"
  follows="all"
  top="5"

@@ -13,7 +13,7 @@
 #include "llvoavatarself.h"
 #include "llspinctrl.h"
 
-static LLRegisterPanelClassWrapper<PanelPreferenceFirestorm> t_pref_fs("panel_preference_angstrom");
+static LLRegisterPanelClassWrapper<PanelPreferenceFirestorm> t_pref_fs("panel_preference_universe");
 
 PanelPreferenceFirestorm::PanelPreferenceFirestorm() : LLPanelPreference()
 {
@@ -188,7 +188,7 @@ void PanelPreferenceFirestorm::refreshTagCombos()
 	getChild<LLUICtrl>("FSShowOwnTagColor_toggle")->setValue(gSavedSettings.getBOOL("FSShowOwnTagColor"));
 
 
-	LLColor4 tag_color = gSavedPerAccountSettings.getColor4("AngstromTagColor");
+	LLColor4 tag_color = gSavedPerAccountSettings.getColor4("UniverseTagColor");
 	LLSD selectedColor("red"); // default case: red
 	if (tag_color==LLColor4::blue) selectedColor = LLSD("blue");
 	else if (tag_color==LLColor4::yellow) selectedColor = LLSD("yellow");
@@ -244,8 +244,8 @@ void PanelPreferenceFirestorm::applyTagCombos()
 	else if (selectedColor == "orange") tag_color = LLColor4((F32)0.99,(F32)0.39,(F32)0.12,(F32)1);
 	else if (selectedColor == "green") tag_color = LLColor4::green;
 
-	if(tag_color!=gSavedPerAccountSettings.getColor4("AngstromTagColor")){
-		gSavedPerAccountSettings.setColor4("AngstromTagColor",tag_color);
+	if(tag_color!=gSavedPerAccountSettings.getColor4("UniverseTagColor")){
+		gSavedPerAccountSettings.setColor4("UniverseTagColor",tag_color);
 		if(gAgentAvatarp.notNull())	gAgentAvatarp->forceBakeAllTextures(true);
 		if(gSavedSettings.getBOOL("FSShowOwnTagColor")) change=true;
 	}

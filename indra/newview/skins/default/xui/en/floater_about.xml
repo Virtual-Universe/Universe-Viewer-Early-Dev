@@ -97,8 +97,8 @@ Error fetching server release notes URL.
           top="20"
           width="435"
           wrap="true">
-For the latest information about Angstrom, visit
-https://bitbucket.org/nhede/angstrom2
+For the latest information about Universe Viewer, visit
+https://virtual-planets.org
 
     </text>
       <text_editor
@@ -136,7 +136,7 @@ https://bitbucket.org/nhede/angstrom2
           top="10"
           width="435"
           wrap="true">
-Angstrom would not be possible without the decision from Linden Lab to make their Second Life viewer source code available.
+Universe Viewer would not be possible without the decision from Linden Lab to make their Second Life viewer source code available.
 
 The Lindens are:
       </text>
@@ -219,7 +219,7 @@ Torben Trautman, Valerie Linden, Minerva Memel, Aura Dirval, Cayu Cluny, Xiki Lu
           top="10"
           width="435"
           wrap="true">
-Angstrom is a community development project to improve the Aurora-Sim server experience. Angstrom is a fork from Phoenix Firestorm Viewer. The Angstrom Development Team thanks everyone who contributed to, and supported the Firestorm Viewer and The Phoenix Viewer Project Inc.
+The Virtual Universe Open Source Project Arm is a community development project dedicated to improving the virtual world experience. Universe Viewer is based off of the old Angstrom Viewer. The Virtual World Research Inc. thanks everyone who contributed to, and supported the Angstrom Viewer, Firestorm Viewer and The Phoenix Viewer Projects.
 
 The Firestorm Development Team:
       </text>
@@ -318,7 +318,7 @@ Alexandrea Fride, DarkAgent Baphomet, Digital Scribe, Hitomi Tiponi, Hugh Helend
     </panel>
     <panel
           border="true"
-          label="Angstrom Credits"
+          label="Universe Credits"
           help_topic="about_ascredits_tab"
           name="as_credits_panel">
       <text
@@ -326,13 +326,13 @@ Alexandrea Fride, DarkAgent Baphomet, Digital Scribe, Hitomi Tiponi, Hugh Helend
           height="90"
           layout="topleft"
           left="5"
-          name="angstrom_intro"
+          name="universe_intro"
           top="10"
           width="435"
           wrap="true">
-        Angstrom is a community development project to improve the Aurora-Sim server experience.  We package contributions from various community developers along with code from Linden Lab, Firestorm and ourselves to bring you a quality, feature-rich viewer experience. Angstrom is a fork from Phoenix Firestorm viewer.
+        Universe is a community development project to improve the Aurora-Sim server experience.  We package contributions from various community developers along with code from Linden Lab, Firestorm and ourselves to bring you a quality, feature-rich viewer experience. Universe is a fork from Phoenix Firestorm viewer.
 
-        The Angstrom Development Team:
+        The Universe Development Team:
 
       </text>
       <text_editor
@@ -343,7 +343,7 @@ Alexandrea Fride, DarkAgent Baphomet, Digital Scribe, Hitomi Tiponi, Hugh Helend
        left="5"
        text_color="LtGray"
        max_length="65536"
-       name="angstrom_names"
+       name="universe_names"
        top_pad="10"
        width="435"
        word_wrap="true">
@@ -359,7 +359,7 @@ Alexandrea Fride, DarkAgent Baphomet, Digital Scribe, Hitomi Tiponi, Hugh Helend
           top_pad="10"
           width="435"
           wrap="true">
-        Additional code generously contributed to Angstrom by:
+        Additional code generously contributed to Universe by:
 
       </text>
       <text_editor
@@ -387,7 +387,7 @@ Alexandrea Fride, DarkAgent Baphomet, Digital Scribe, Hitomi Tiponi, Hugh Helend
     top_pad="10"
     width="435"
     wrap="true">
-        Special thanks to our Angstrom Support Team, wiki editors, educators, and translators:
+        Special thanks to our Support Team, wiki editors, educators, and translators:
 
       </text>
       <text_editor
@@ -414,25 +414,8 @@ Alexandrea Fride, DarkAgent Baphomet, Digital Scribe, Hitomi Tiponi, Hugh Helend
           top_pad="10"
           width="435"
           wrap="true">
-        Angstrom's main target is to support the Aurora-Sim grid and server systems. Angstrom gets patches from the Firestorm development repository on a regular basis. Angstrom Development Team does not intend to have Firestorm or LindenLabs viewer Unreleased Features released. If this happens, contact the Angstrom Development Team.
-
+        The main target of the Universe Viewer is to support the virtual world grid and server systems. Universe Viewer will get patches from the development repositories of other viewers on a regular basis. Virtual World Research Inc. does not intend to have unreleased features released. If this happens, contact Virtual World Research Inc.
       </text>
-      <!--
-      <text_editor
-       enabled="false"
-       follows="top|left"
-       height="75"
-       bg_readonly_color="Transparent"
-       left="5"
-       text_color="LtGray"
-       max_length="65536"
-       name="fs_artists_names"
-       top_pad="10"
-       width="435"
-       word_wrap="true">
-        none.
-      </text_editor>
-      -->
     </panel>
     <panel
       border="true"

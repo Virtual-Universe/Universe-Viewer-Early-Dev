@@ -7,11 +7,11 @@
  left="1"
  top="1"
  width="540"
- label="Angstrom"
- name="angstrom">
+ label="Universe"
+ name="universe">
 
 <tab_container
- label="Angstrom Prefs"
+ label="Universe Prefs"
  layout="topleft"
  follows="all"
  top="5"
@@ -515,7 +515,7 @@
      right="-1"
      follows="all"
      label="Avatar"
-     name="angstrom_avatar" >
+     name="universe_avatar" >
 
         <text
          type="string"

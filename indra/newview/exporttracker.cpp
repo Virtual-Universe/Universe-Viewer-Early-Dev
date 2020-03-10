@@ -1,5 +1,5 @@
 /* $LicenseInfo:firstyear=2012&license=viewerlgpl$
- * Angstrom Viewer Source Code
+ * Universe Viewer Source Code
  * @file exporttracker.cpp
  * @brief A utility for exporting linksets to XML.
  * Copyright (C) 2009, Modular Systems

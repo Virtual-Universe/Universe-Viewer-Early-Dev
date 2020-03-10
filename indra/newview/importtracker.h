@@ -1,5 +1,5 @@
 /* $LicenseInfo:firstyear=2012&license=viewerlgpl$
- * Angstrom Viewer Source Code
+ * Universe Viewer Source Code
  * @file importtracker.h
  * @brief A utility for importing linksets from XML.
  * Copyright (C) 2009, Modular Systems

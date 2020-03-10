@@ -239,7 +239,7 @@ void LLAssetUploadResponder::error(U32 statusNum, const std::string& reason)
 		case 400:
 			args["FILE"] = (mFileName.empty() ? mVFileID.asString() : mFileName);
 			args["REASON"] = "Error in upload request.  Please visit "
-				"https://bitbucket.org/nhede/angstrom2/wiki/Home for help fixing this problem.";
+				"https://wiki.virtual-planets.org/Home for help fixing this problem.";
 			LLNotificationsUtil::add("CannotUploadReason", args);
 			break;
 		case 500:

@@ -34,7 +34,7 @@ WANTS_FMOD=$FALSE
 WANTS_BUILD=$FALSE
 PLATFORM="darwin" # darwin, win32, win64, linux32, linux64
 BTYPE="Release"
-CHANNEL="Angstrom" # will be overwritten later with platform-specific values unless manually specified.
+CHANNEL="Universe" # will be overwritten later with platform-specific values unless manually specified.
 LL_ARGS_PASSTHRU=""
 
 ###
@@ -49,7 +49,7 @@ showUsage()
     echo
     echo "  --clean     : Remove past builds & configuration"
     echo "  --config    : General a new architecture-specific config"
-    echo "  --build    : build Angstrom"
+    echo "  --build    : build Universe"
     echo "  --version   : Update version number"
     echo "  --chan  [Release|Beta|Private]   : Private is the default, sets channel"
     echo "  --btype [Release|RelWithDebInfo] : Release is default, whether to use symbols"
@@ -253,7 +253,7 @@ if [ ! -d `dirname "$LOG"` ] ; then
         mkdir -p `dirname "$LOG"`
 fi
 
-echo -e "configure_angstrom.py" > $LOG
+echo -e "configure_universe.py" > $LOG
 echo -e "       PLATFORM: '$PLATFORM'"       | tee -a $LOG
 echo -e "         KDU: `b2a $WANTS_KDU`"     | tee -a $LOG
 echo -e "        FMOD: `b2a $WANTS_FMOD`"    | tee -a $LOG
@@ -360,10 +360,10 @@ if [ $WANTS_CONFIG -eq $TRUE ] ; then
         TARGET="Visual Studio 10"
     fi
 
-    cmake -G "$TARGET" ../indra $FMOD $KDU $PACKAGE -DUNATTENDED:BOOL=ON -DLL_TESTS:BOOL=OFF -DWORD_SIZE:STRING=32 -DCMAKE_BUILD_TYPE:STRING=$BTYPE -DROOT_PROJECT_NAME:STRING=Angstrom $LL_ARGS_PASSTHRU | tee $LOG
+    cmake -G "$TARGET" ../indra $FMOD $KDU $PACKAGE -DUNATTENDED:BOOL=ON -DLL_TESTS:BOOL=OFF -DWORD_SIZE:STRING=32 -DCMAKE_BUILD_TYPE:STRING=$BTYPE -DROOT_PROJECT_NAME:STRING=Universe $LL_ARGS_PASSTHRU | tee $LOG
 
     if [ $PLATFORM == "win32" ] ; then
-    ../indra/tools/vstool/VSTool.exe --solution Angstrom.sln --startup angstrom-bin --workingdir angstrom-bin "..\\..\\indra\\newview" --config $BTYPE
+    ../indra/tools/vstool/VSTool.exe --solution Universe.sln --startup universe-bin --workingdir universe-bin "..\\..\\indra\\newview" --config $BTYPE
     fi
 
 fi
@@ -372,15 +372,15 @@ if [ $WANTS_BUILD -eq $TRUE ] ; then
     echo "Building $PLATFORM..."
     if [ $PLATFORM == "darwin" ] ; then
         if [ $OSTYPE == "darwin11" -o $OSTYPE == "darwin12" ] ; then
-            xcodebuild -configuration $BTYPE -project Angstrom.xcodeproj GCC_OPTIMIZATION_LEVEL=3 GCC_ENABLE_SSE3_EXTENSIONS=YES 2>&1 | tee -a $LOG
+            xcodebuild -configuration $BTYPE -project Universe.xcodeproj GCC_OPTIMIZATION_LEVEL=3 GCC_ENABLE_SSE3_EXTENSIONS=YES 2>&1 | tee -a $LOG
         else
-            xcodebuild -configuration $BTYPE -project Angstrom.xcodeproj GCC_VERSION=4.2 GCC_OPTIMIZATION_LEVEL=3 GCC_ENABLE_SSE3_EXTENSIONS=YES 2>&1 | tee -a $LOG
+            xcodebuild -configuration $BTYPE -project Universe.xcodeproj GCC_VERSION=4.2 GCC_OPTIMIZATION_LEVEL=3 GCC_ENABLE_SSE3_EXTENSIONS=YES 2>&1 | tee -a $LOG
         fi
     elif [ $PLATFORM == "linux32" ] ; then
         JOBS=`cat /proc/cpuinfo | grep processor | wc -l`
         make -j 3 | tee -a $LOG
     elif [ $PLATFORM == "win32" ] ; then
-        msbuild.exe Angstrom.sln /flp:LogFile=logs\\AngstromBuild_win32.log /flp1:errorsonly;LogFile=logs\\AngstromBuild_win32.err /flp:LogFile=logs\\AngstromBuild_win32.log /p:Configuration=$BTYPE /p:Platform=Win32 /t:Build /p:useenv=true /verbosity:normal /toolsversion:4.0 /p:"VCBuildAdditionalOptions= /incremental"
+        msbuild.exe Universe.sln /flp:LogFile=logs\\UniverseBuild_win32.log /flp1:errorsonly;LogFile=logs\\UniverseBuild_win32.err /flp:LogFile=logs\\UniverseBuild_win32.log /p:Configuration=$BTYPE /p:Platform=Win32 /t:Build /p:useenv=true /verbosity:normal /toolsversion:4.0 /p:"VCBuildAdditionalOptions= /incremental"
     fi
 fi
 

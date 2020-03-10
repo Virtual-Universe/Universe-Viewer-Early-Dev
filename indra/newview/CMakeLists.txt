@@ -751,7 +751,7 @@ else (HAS_OPENSIM_SUPPORT)
         )
 endif (HAS_OPENSIM_SUPPORT)
 
-set(VIEWER_BINARY_NAME "angstrom-bin" CACHE STRING
+set(VIEWER_BINARY_NAME "universe-bin" CACHE STRING
     "The name of the viewer executable to create.")
 
 set(viewer_HEADER_FILES
@@ -1441,11 +1441,11 @@ if (DARWIN)
 
   # Add resource files to the project.
   set(viewer_RESOURCE_FILES
-    angstrom_icon.icns
+    universe_icon.icns
     macview.r
     gpu_table.txt
-    Info-Angstrom.plist
-    Angstrom.nib/
+    Info-Universe.plist
+    Universe.nib/
     # CMake doesn't seem to support Xcode language variants well just yet
     English.lproj/InfoPlist.strings
     English.lproj/language.txt
@@ -1522,18 +1522,18 @@ if (WINDOWS)
     message("Copying icons for ${ICON_PATH}")
     execute_process(
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/icons/${ICON_PATH}/angstrom_icon.ico"
-        "${CMAKE_CURRENT_SOURCE_DIR}/res/angstrom_icon.ico"
+        "${CMAKE_CURRENT_SOURCE_DIR}/icons/${ICON_PATH}/universe_icon.ico"
+        "${CMAKE_CURRENT_SOURCE_DIR}/res/universe_icon.ico"
       )
     execute_process(
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/icons/${ICON_PATH}/angstrom_256.BMP"
-        "${CMAKE_CURRENT_SOURCE_DIR}/res/angstrom_icon.BMP"
+        "${CMAKE_CURRENT_SOURCE_DIR}/icons/${ICON_PATH}/universe_256.BMP"
+        "${CMAKE_CURRENT_SOURCE_DIR}/res/universe_icon.BMP"
       )
     execute_process(
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/icons/${ICON_PATH}/angstrom_256.BMP"
-        "${CMAKE_CURRENT_SOURCE_DIR}/res-sdl/angstrom_icon.BMP"
+        "${CMAKE_CURRENT_SOURCE_DIR}/icons/${ICON_PATH}/universe_256.BMP"
+        "${CMAKE_CURRENT_SOURCE_DIR}/res-sdl/universe_icon.BMP"
       )
 
     # Add resource files to the project.
@@ -1569,9 +1569,9 @@ if (WINDOWS)
         res/lltooltranslate.cur
         res/lltoolzoomin.cur
         res/lltoolzoomout.cur
-        res/angstrom_icon.BMP
-        res/angstrom_icon.ico
-        res-sdl/angstrom_icon.BMP
+        res/universe_icon.BMP
+        res/universe_icon.ico
+        res-sdl/universe_icon.BMP
         res/resource.h
         res/toolpickobject.cur
         res/toolpickobject2.cur
@@ -1675,10 +1675,10 @@ set(viewer_APPSETTINGS_FILES
     app_settings/low_graphics.xml
     app_settings/mid_graphics.xml
     app_settings/grids.fallback.xml
-    app_settings/account_settings_angstrom.xml
-    app_settings/settings_angstrom.xml
+    app_settings/account_settings_universe.xml
+    app_settings/settings_universe.xml
     app_settings/settings_hybrid.xml
-    app_settings/settings_angstrom.xml
+    app_settings/settings_universe.xml
     app_settings/settings_v3.xml
     app_settings/settings.xml
     app_settings/settings_crash_behavior.xml
@@ -2090,7 +2090,7 @@ set(ARTWORK_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH
 
 
 if (LINUX)
-  set(product Angstrom-${ARCH}-${viewer_VERSION})
+  set(product Universe-${ARCH}-${viewer_VERSION})
 
   # These are the generated targets that are copied to package/
   set(COPY_INPUT_DEPENDENCIES
@@ -2160,19 +2160,19 @@ if (LINUX)
 endif (LINUX)
 
 if (DARWIN)
-  set(product "Angstrom")
+  set(product "Universe")
   set_target_properties(
     ${VIEWER_BINARY_NAME}
     PROPERTIES
     OUTPUT_NAME "${product}"
     MACOSX_BUNDLE_INFO_STRING "info string - localize me"
-    MACOSX_BUNDLE_ICON_FILE "angstrom_icon.icns"
-    MACOSX_BUNDLE_GUI_IDENTIFIER "Angstrom"
+    MACOSX_BUNDLE_ICON_FILE "universe_icon.icns"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "Universe"
     MACOSX_BUNDLE_LONG_VERSION_STRING "ververver"
-    MACOSX_BUNDLE_BUNDLE_NAME "Angstrom"
+    MACOSX_BUNDLE_BUNDLE_NAME "Universe"
     MACOSX_BUNDLE_SHORT_VERSION_STRING "asdf"
     MACOSX_BUNDLE_BUNDLE_VERSION "asdf"
-    MACOSX_BUNDLE_COPYRIGHT "Copyright 2010-2012 The Angstrom Viewer Project, Inc."
+    MACOSX_BUNDLE_COPYRIGHT "Copyright 2020-2028 Virtual World Research, Inc."
     )
 
   add_custom_command(
@@ -2235,7 +2235,7 @@ if (PACKAGE)
   set(SYMBOL_SEARCH_DIRS "")
   if (WINDOWS)
     list(APPEND SYMBOL_SEARCH_DIRS "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}")
-    set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/angstrom-symbols-windows.tar.bz2")
+    set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/universe-symbols-windows.tar.bz2")
     # slplugin.exe failing symbols dump - need to debug, might have to do with updated version of google breakpad
     # set(VIEWER_EXE_GLOBS "${VIEWER_BINARY_NAME}${CMAKE_EXECUTABLE_SUFFIX} slplugin.exe")
     set(VIEWER_EXE_GLOBS "${VIEWER_BINARY_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
@@ -2251,14 +2251,14 @@ if (PACKAGE)
     list(APPEND SYMBOL_SEARCH_DIRS "${CMAKE_BINARY_DIR}/media_plugins/gstreamer010/${CMAKE_CFG_INTDIR}")
     list(APPEND SYMBOL_SEARCH_DIRS "${CMAKE_BINARY_DIR}/media_plugins/quicktime/${CMAKE_CFG_INTDIR}")
     list(APPEND SYMBOL_SEARCH_DIRS "${CMAKE_BINARY_DIR}/media_plugins/webkit/${CMAKE_CFG_INTDIR}")
-    set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/angstrom-symbols-darwin.tar.bz2")
-    set(VIEWER_EXE_GLOBS "'Angstrom' SLPlugin mac-updater mac-crash-logger")
+    set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/universe-symbols-darwin.tar.bz2")
+    set(VIEWER_EXE_GLOBS "'Universe' SLPlugin mac-updater mac-crash-logger")
     set(VIEWER_LIB_GLOB "*.dylib")
   endif (DARWIN)
   if (LINUX)
     list(APPEND SYMBOL_SEARCH_DIRS "${CMAKE_CURRENT_BINARY_DIR}/packaged")
-    set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/angstrom-symbols-linux.tar.bz2")
-    set(VIEWER_EXE_GLOBS "do-not-directly-run-angstrom-bin SLPlugin")
+    set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/universe-symbols-linux.tar.bz2")
+    set(VIEWER_EXE_GLOBS "do-not-directly-run-universe-bin SLPlugin")
     set(VIEWER_LIB_GLOB "*${CMAKE_SHARED_MODULE_SUFFIX}*")
     set(VIEWER_COPY_MANIFEST copy_l_viewer_manifest)
   endif (LINUX)

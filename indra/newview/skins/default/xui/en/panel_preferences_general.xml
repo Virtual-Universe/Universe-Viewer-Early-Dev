@@ -411,7 +411,7 @@
      layout="topleft"
      left_pad="50"
      name="FSPublishRadarTag"
-     tool_tip="Enabling this will allow scripted HUDs to receive a tag named 'Angstrom' when displaying information about your avatar. This functionality enhances the functionality of some scripted radar HUDs, and uses the Angstrom LSL bridge."
+     tool_tip="Enabling this will allow scripted HUDs to receive a tag named 'Universe' when displaying information about your avatar. This functionality enhances the functionality of some scripted radar HUDs, and uses the Universe LSL bridge."
      top_delta="0" />
      -->
 	 

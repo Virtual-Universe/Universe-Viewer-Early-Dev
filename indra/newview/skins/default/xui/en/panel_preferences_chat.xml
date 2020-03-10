@@ -11,7 +11,7 @@
  name="chat">
 
 <tab_container
- label="Angstrom Prefs"
+ label="Universe Prefs"
  layout="topleft"
  follows="all"
  top="5"
@@ -688,8 +688,8 @@
          left="1"
          right="-1"
          follows="all"
-         label="Angstrom"
-         name="ChatAngstrom" >
+         label="Universe"
+         name="ChatUniverse" >
 
             <text
              name="chat_and_im_enhancements"

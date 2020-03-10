@@ -42,7 +42,7 @@ set_source_files_properties(${win_crash_logger_HEADER_FILES}
                             PROPERTIES HEADER_FILE_ONLY TRUE)
 
 set(win_crash_logger_RESOURCE_FILES
-    angstrom_icon.ico
+    universe_icon.ico
     )
 
 set_source_files_properties(${win_crash_logger_RESOURCE_FILES}

@@ -63,9 +63,9 @@
 
 #define LIB_ROCK_NAME "Rock - medium, round"
 
-//#define ROOT_FIRESTORM_FOLDER "#Angstrom"	//moved to llinventoryfunctions to synch with the AO object
+//#define ROOT_FIRESTORM_FOLDER "#Universe"	//moved to llinventoryfunctions to synch with the AO object
 #define FS_BRIDGE_FOLDER "#LSL Bridge"
-#define FS_BRIDGE_NAME "#Angstrom LSL Bridge v"
+#define FS_BRIDGE_NAME "#Universe LSL Bridge v"
 #define FS_BRIDGE_CONTAINER_FOLDER "Landscaping"
 #define FS_BRIDGE_MAJOR_VERSION 2
 #define FS_BRIDGE_MINOR_VERSION 3

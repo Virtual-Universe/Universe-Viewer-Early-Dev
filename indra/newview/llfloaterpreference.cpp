@@ -1237,7 +1237,7 @@ bool callback_clear_settings(const LLSD& notification, const LLSD& response)
 //[ADD - Clear Usersettings : SJ] - When button Reset Defaults is clicked show a warning 
 void LLFloaterPreference::onClickClearSettings()
 {
-	LLNotificationsUtil::add("AngstromClearSettingsPrompt",LLSD(), LLSD(), callback_clear_settings);
+	LLNotificationsUtil::add("UniverseClearSettingsPrompt",LLSD(), LLSD(), callback_clear_settings);
 }
 
 void LLFloaterPreference::onClickChatOnlineNotices()

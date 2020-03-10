@@ -1254,6 +1254,6 @@ std::string LLUrlEntryJira::getUrl(const std::string &string) const
 	}
 	else
 	{
-		return llformat("https://bitbucket.org/nhede/angstrom2/issues");
+		return llformat("https://github.com/Virtual-Universe/Universe-Viewer-Early-Dev/issues");
 	}
 }

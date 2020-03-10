@@ -78,8 +78,8 @@ LangString LanguageCode ${LANG_ENGLISH}  "en"
 ;; Tweak for different servers/builds (this placeholder is replaced by viewer_manifest.py)
 ;; For example:
 ;; !define INSTFLAGS "%(flags)s"
-;; !define INSTNAME   "Angstrom%(grid_caps)s"
-;; !define SHORTCUT   "Angstrom (%(grid_caps)s)"
+;; !define INSTNAME   "Universe%(grid_caps)s"
+;; !define SHORTCUT   "Universe (%(grid_caps)s)"
 ;; !define URLNAME   "secondlife%(grid)s"
 ;; !define UNINSTALL_SETTINGS 1
 
@@ -93,8 +93,8 @@ LicenseData "VivoxAUP.txt"
 ;SubCaption 0 $(LicenseSubTitleSetup)	; override "license agreement" text
 
 BrandingText " "						; bottom of window text
-Icon          %%SOURCE%%\installers\windows\angstrom_icon.ico
-UninstallIcon %%SOURCE%%\installers\windows\angstrom_icon.ico
+Icon          %%SOURCE%%\installers\windows\universe_icon.ico
+UninstallIcon %%SOURCE%%\installers\windows\universe_icon.ico
 WindowIcon on							; show our icon in left corner
 BGGradient off							; no big background window
 CRCCheck on								; make sure CRC is OK
@@ -106,7 +106,7 @@ SetOverwrite on							; stomp files by default
 ;AutoCloseWindow true					; after all files install, close window
 
 InstallDir "$PROGRAMFILES\${INSTNAME}"
-InstallDirRegKey HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\${INSTNAME}" ""
+InstallDirRegKey HKEY_LOCAL_MACHINE "SOFTWARE\The Universe Project\${INSTNAME}" ""
 DirText $(DirectoryChooseTitle) $(DirectoryChooseSetup)
 
 Page license
@@ -259,7 +259,7 @@ FunctionEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function CheckIfAlreadyCurrent
     Push $0
-    ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\$INSTPROG" "Version"
+    ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\The Universe Project\$INSTPROG" "Version"
     StrCmp $0 ${VERSION_LONG} 0 continue_install
     StrCmp $SKIP_DIALOGS "true" continue_install
     MessageBox MB_OKCANCEL $(CheckIfCurrentMB) /SD IDOK IDOK continue_install
@@ -626,15 +626,15 @@ Push $2
 	; Otherwise (preview/dmz etc) just remove cache
 
         # Local Settings directory is the cache, there is no "cache" subdir
-        RMDir /r "$2\Local Settings\Application Data\Angstrom\user_settings"
-	RMDir /r "$2\Local Settings\Application Data\Angstrom\data"
+        RMDir /r "$2\Local Settings\Application Data\Universe\user_settings"
+	RMDir /r "$2\Local Settings\Application Data\Universe\data"
         # Vista version of the same
-        RMDir /r "$2\AppData\Local\Angstrom\user_settings"
-	RMDir /r "$2\AppData\Local\Angstrom\data"
-    Delete  "$2\Application Data\Angstrom\*.bmp"
-    Delete  "$2\Application Data\Angstrom\search_history.txt"
-    Delete  "$2\Application Data\Angstrom\plugin_cookies.txt"
-    Delete  "$2\Application Data\Angstrom\typed_locations.txt"
+        RMDir /r "$2\AppData\Local\Universe\user_settings"
+	RMDir /r "$2\AppData\Local\Universe\data"
+    Delete  "$2\Application Data\Universe\*.bmp"
+    Delete  "$2\Application Data\Universe\search_history.txt"
+    Delete  "$2\Application Data\Universe\plugin_cookies.txt"
+    Delete  "$2\Application Data\Universe\typed_locations.txt"
 
   CONTINUE:
     IntOp $0 $0 + 1
@@ -647,17 +647,17 @@ Pop $2
 Pop $1
 Pop $0
 
-; Delete files in Documents and Settings\All Users\Angstrom
+; Delete files in Documents and Settings\All Users\Universe
 Push $0
   ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" "Common AppData"
   StrCmp $0 "" +2
-  RMDir /r "$0\Angstrom"
+  RMDir /r "$0\Universe"
 Pop $0
 
 ; Delete files in C:\Windows\Application Data\SecondLife
 ; If the user is running on a pre-NT system, Application Data lives here instead of
 ; in Documents and Settings.
-RMDir /r "$WINDIR\Application Data\Angstrom"
+RMDir /r "$WINDIR\Application Data\Universe"
 
 FunctionEnd
 
@@ -700,7 +700,7 @@ Function un.RemovePassword
 DetailPrint $(UnRemovePasswordsDP)
 
 SetShellVarContext current
-Delete "$APPDATA\Angstrom\user_settings\password.dat"
+Delete "$APPDATA\Universe\user_settings\password.dat"
 SetShellVarContext all
 
 FunctionEnd
@@ -785,7 +785,7 @@ SetShellVarContext all
 Call un.CloseSecondLife
 
 ; Clean up registry keys and subkeys (these should all be !defines somewhere)
-DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\$INSTPROG"
+DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\$INSTPROG"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG"
 
 ; Clean up shortcuts
@@ -839,7 +839,7 @@ Call CheckWindowsVersion		; Don't install if on Windows XP SP1 or older (do to X
 lbl_configure_default_lang:
     ; If we currently have a version of SL installed, default to the language of that install
     ; Otherwise don't change $LANGUAGE and it will default to the OS UI language.
-    ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\${INSTNAME}" "InstallerLanguage"
+    ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\${INSTNAME}" "InstallerLanguage"
     IfErrors +2 0 ; If error skip the copy instruction 
 	StrCpy $LANGUAGE $0
 
@@ -863,7 +863,7 @@ lbl_configure_default_lang:
     StrCpy $LANGUAGE $0
 
 	; save language in registry		
-	WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\${INSTNAME}" "InstallerLanguage" $LANGUAGE
+	WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\${INSTNAME}" "InstallerLanguage" $LANGUAGE
 lbl_return:
     Pop $0
     Return
@@ -873,7 +873,7 @@ FunctionEnd
 Function un.onInit
 	; read language from registry and set for uninstaller
     ; Key will be removed on successful uninstall
-	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\${INSTNAME}" "InstallerLanguage"
+	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\${INSTNAME}" "InstallerLanguage"
     IfErrors lbl_end
 	StrCpy $LANGUAGE $0
 lbl_end:
@@ -970,18 +970,18 @@ CreateShortCut "$INSTDIR\Uninstall $INSTSHORTCUT.lnk" \
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Write registry
-WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\$INSTPROG" "" "$INSTDIR"
-WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\$INSTPROG" "Version" "${VERSION_LONG}"
-WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\$INSTPROG" "Flags" "$INSTFLAGS"
-WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\The Angstrom Project\$INSTPROG" "Shortcut" "$INSTSHORTCUT"
-WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\The Angstorm Project\$INSTPROG" "Exe" "$INSTEXE"
+WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\$INSTPROG" "" "$INSTDIR"
+WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\$INSTPROG" "Version" "${VERSION_LONG}"
+WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\$INSTPROG" "Flags" "$INSTFLAGS"
+WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\$INSTPROG" "Shortcut" "$INSTSHORTCUT"
+WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Universe Viewer\$INSTPROG" "Exe" "$INSTEXE"
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "DisplayName" "$INSTPROG (remove only)"
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "UninstallString" '"$INSTDIR\uninst.exe"'
 ; <FS:Ansariel> Add additional data for uninstall list in Windows
-WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "Publisher" "The Angstrom Project Inc."
-WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "URLInfoAbout" "https://bitbucket.org/nhede/angstrom2"
-WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "URLUpdateInfo" "https://bitbucket.org/nhede/angstrom2/downloads"
-WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "HelpLink" "https://bitbucket.org/nhede/angstrom2/wiki/Home"
+WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "Publisher" "Virtual World Research Inc."
+WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "URLInfoAbout" "https://virtual-planets.org/Universe_Viewer/"
+WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "URLUpdateInfo" "https://virtual-planets.org/downloads"
+WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "HelpLink" "https://wiki.virtual-planets.org/"
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "DisplayIcon" '"$INSTDIR\$INSTEXE"'
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "DisplayVersion" "${VERSION_LONG}"
 WriteRegDWORD HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "EstimatedSize" "0x0002BC00" ; 175 MB

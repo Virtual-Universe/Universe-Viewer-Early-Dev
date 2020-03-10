@@ -54,8 +54,8 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_LL_ICON             ICON                    "angstrom_icon.ico"
-IDI_LCD_LL_ICON         ICON                    "angstrom_icon.ico"
+IDI_LL_ICON             ICON                    "universe_icon.ico"
+IDI_LCD_LL_ICON         ICON                    "universe_icon.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -67,7 +67,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDI_LL_ICON,IDC_STATIC,7,7,20,20
-    LTEXT           "Loading Angstrom ...",666,36,13,211,8
+    LTEXT           "Loading Universe ...",666,36,13,211,8
 END
 
 
@@ -151,12 +151,12 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "The Angstrom Project"
-            VALUE "FileDescription", "Angstrom"
+            VALUE "CompanyName", "Virtual World Research Inc."
+            VALUE "FileDescription", "Universe"
             VALUE "FileVersion", "2.1.1.0"
             VALUE "InternalName", "Second Life"
-            VALUE "LegalCopyright", "Copyright � 2001-2012, The Angstrom Project"
-            VALUE "OriginalFilename", "Angstrom.exe"
+            VALUE "LegalCopyright", "Copyright � 2020-2028, Virtual World Research Inc."
+            VALUE "OriginalFilename", "Universe.exe"
             VALUE "ProductName", "Second Life"
             VALUE "ProductVersion", "2.1.1.0"
         END

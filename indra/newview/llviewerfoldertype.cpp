@@ -167,7 +167,7 @@ LLViewerFolderDictionary::LLViewerFolderDictionary()
 	addEntry(LLFolderType::FT_NONE, 				new ViewerFolderEntry("New Folder",				"Inv_FolderOpen",		"Inv_FolderClosed",		FALSE,     false, "default"));
 
 	// <FS:Ansariel> Special Firestorm folder
-	addEntry(LLFolderType::FT_FIRESTORM, 			new ViewerFolderEntry("Angstrom",				"Inv_AngstromOpen", 	"Inv_AngstromClosed",	FALSE,     true));
+	addEntry(LLFolderType::FT_FIRESTORM, 			new ViewerFolderEntry("Universe",				"Inv_UniverseOpen", 	"Inv_UniverseClosed",	FALSE,     true));
 	addEntry(LLFolderType::FT_PHOENIX, 				new ViewerFolderEntry("Phoenix",				"Inv_PhoenixOpen",		"Inv_PhoenixClosed",	FALSE,     true));
 	addEntry(LLFolderType::FT_RLV,					new ViewerFolderEntry("RLV",					"Inv_RLVOpen",			"Inv_RLVClosed",		FALSE,     true));
 	// </FS:Ansariel> Special Firestorm folder

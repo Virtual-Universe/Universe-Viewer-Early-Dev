@@ -3661,7 +3661,7 @@ public:
 			{
 				if (FSMuteAllGroups || (FSMuteGroupWhenNoticesDisabled && !group_data.mAcceptNotices))
 				{
-					llinfos << "Angstrom: muting group chat: " << group_data.mName << LL_ENDL;
+					llinfos << "Universe: muting group chat: " << group_data.mName << LL_ENDL;
 					
 					//KC: make sure we leave the group chat at the server end as well
 					std::string aname;

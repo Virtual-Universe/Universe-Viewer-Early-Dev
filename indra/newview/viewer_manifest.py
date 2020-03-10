@@ -384,7 +384,7 @@ class WindowsManifest(ViewerManifest):
 
         if self.is_packaging_viewer():
             # Find secondlife-bin.exe in the 'configuration' dir, then rename it to the result of final_exe.
-            self.path(src='%s/angstrom-bin.exe' % self.args['configuration'], dst=self.final_exe())
+            self.path(src='%s/universe-bin.exe' % self.args['configuration'], dst=self.final_exe())
 
         # Plugin host application
         self.path2basename(os.path.join(os.pardir,
@@ -649,26 +649,26 @@ class WindowsManifest(ViewerManifest):
         if self.default_channel():
             if self.default_grid():
                 # release viewer
-                installer_file = "Angstrom_%(version_dashes)s_Setup.exe"
+                installer_file = "Universe_%(version_dashes)s_Setup.exe"
                 grid_vars_template = """
                 OutFile "%(installer_file)s"
                 !define INSTFLAGS "%(flags)s"
-                !define INSTNAME   "Angstrom"
-                !define SHORTCUT   "Angstrom"
+                !define INSTNAME   "Universe"
+                !define SHORTCUT   "Universe"
                 !define URLNAME   "secondlife"
-                Caption "Angstrom ${VERSION}"
+                Caption "Universe ${VERSION}"
                 """
             else:
                 # beta grid viewer
-                installer_file = "Angstrom_%(version_dashes)s_(%(grid_caps)s)_Setup.exe"
+                installer_file = "Universe_%(version_dashes)s_(%(grid_caps)s)_Setup.exe"
                 grid_vars_template = """
                 OutFile "%(installer_file)s"
                 !define INSTFLAGS "%(flags)s"
-                !define INSTNAME   "Angstrom%(grid_caps)s"
-                !define SHORTCUT   "Angstrom (%(grid_caps)s)"
+                !define INSTNAME   "Universe%(grid_caps)s"
+                !define SHORTCUT   "Universe (%(grid_caps)s)"
                 !define URLNAME   "secondlife%(grid)s"
                 !define UNINSTALL_SETTINGS 1
-                Caption "Angstrom %(grid)s ${VERSION}"
+                Caption "Universe %(grid)s ${VERSION}"
                 """
         else:
             # some other channel on some grid
@@ -727,19 +727,19 @@ class WindowsManifest(ViewerManifest):
 
         #AO: Try to package up symbols
         # New Method, for reading cross platform stack traces on a linux/mac host
-        if (os.path.exists("%s/angstrom-symbols-windows.tar.bz2" % self.args['configuration'].lower())):
+        if (os.path.exists("%s/universe-symbols-windows.tar.bz2" % self.args['configuration'].lower())):
             # Rename to add version numbers
             sName = "%s/Phoenix_%s_%s_symbols-windows.tar.bz2" % (self.args['configuration'].lower(),substitution_strings['channel_oneword'],substitution_strings['version_dashes'])
 
             if os.path.exists( sName ):
                 os.unlink( sName )
 
-            os.rename("%s/angstrom-symbols-windows.tar.bz2" % self.args['configuration'].lower(), sName )
+            os.rename("%s/universe-symbols-windows.tar.bz2" % self.args['configuration'].lower(), sName )
         
         # OLD METHOD, Still used for windows-based debugging
         symbolZip = zipfile.ZipFile("%s_%s_SymbolsWin.zip" % (substitution_strings['channel_oneword'],substitution_strings['version_dashes']), 'w',zipfile.ZIP_DEFLATED)
-        symbolZip.write("%s/Angstrom-bin.exe" % self.args['configuration'].lower(),"Angstrom-bin.exe")
-        symbolZip.write("%s/Angstrom-bin.pdb" % self.args['configuration'].lower(),"Angstrom-bin.pdb")
+        symbolZip.write("%s/Universe-bin.exe" % self.args['configuration'].lower(),"Universe-bin.exe")
+        symbolZip.write("%s/Universe-bin.pdb" % self.args['configuration'].lower(),"Universe-bin.pdb")
         # symbolZip.write("../sharedlibs/%s/llcommon.dll" % self.args['configuration'].lower(),"llcommon.dll")
         # symbolZip.write("../sharedlibs/%s/llcommon.pdb" % self.args['configuration'].lower(),"llcommon.pdb")
         symbolZip.close()
@@ -773,10 +773,10 @@ class DarwinManifest(ViewerManifest):
 
     def construct(self):
         # copy over the build result (this is a no-op if run within the xcode script)
-        self.path(self.args['configuration'] + "/Angstrom.app", dst="")
+        self.path(self.args['configuration'] + "/Universe.app", dst="")
 
         if self.prefix(src="", dst="Contents"):  # everything goes in Contents
-            self.path("Info-Angstrom.plist", dst="Info.plist")
+            self.path("Info-Universe.plist", dst="Info.plist")
 
             # copy additional libs in <bundle>/Contents/MacOS/
             self.path("../packages/lib/release/libndofdev.dylib", dst="Resources/libndofdev.dylib")
@@ -796,7 +796,7 @@ class DarwinManifest(ViewerManifest):
 
                 self.path("licenses-mac.txt", dst="licenses.txt")
                 self.path("featuretable_mac.txt")
-                self.path("Angstrom.nib")
+                self.path("Universe.nib")
                 self.path("VivoxAUP.txt")
 
                 icon_path = self.icon_path()
@@ -804,7 +804,7 @@ class DarwinManifest(ViewerManifest):
                     self.path("phoenix_icon.icns")
                     self.end_prefix(icon_path)
 
-                self.path("Angstrom.nib")
+                self.path("Universe.nib")
                 
                 # Translations
                 self.path("English.lproj")
@@ -917,7 +917,7 @@ class DarwinManifest(ViewerManifest):
         if ("package" in self.args['actions'] or 
             "unpacked" in self.args['actions']):
             self.run_command('strip -S %(viewer_binary)r' %
-                             { 'viewer_binary' : self.dst_path_of('Contents/MacOS/Angstrom')})
+                             { 'viewer_binary' : self.dst_path_of('Contents/MacOS/Universe')})
 
 
     def copy_finish(self):
@@ -968,7 +968,7 @@ class DarwinManifest(ViewerManifest):
 #                                 'bundle': self.get_dst_prefix()
 #                })
 
-        channel_standin = 'Angstrom'  # hah, our default channel is not usable on its own
+        channel_standin = 'Universe'  # hah, our default channel is not usable on its own
         if not self.default_channel():
             channel_standin = self.channel()
 
@@ -977,7 +977,7 @@ class DarwinManifest(ViewerManifest):
         # MBW -- If the mounted volume name changes, it breaks the .DS_Store's background image and icon positioning.
         #  If we really need differently named volumes, we'll need to create multiple DS_Store file images, or use some other trick.
 
-        volname="Angstrom Installer"  # DO NOT CHANGE without understanding comment above
+        volname="Universe Installer"  # DO NOT CHANGE without understanding comment above
 
         #if self.default_channel():
         #    if not self.default_grid():
@@ -1010,7 +1010,7 @@ class DarwinManifest(ViewerManifest):
             # Copy everything in to the mounted .dmg
 
             if self.default_channel() and not self.default_grid():
-                app_name = "Angstrom " + self.args['grid']
+                app_name = "Universe " + self.args['grid']
             else:
                 app_name = channel_standin.strip()
 
@@ -1021,11 +1021,11 @@ class DarwinManifest(ViewerManifest):
             # one for release candidate and one for first look. Any other channels
             # will use the release .DS_Store, and will look broken.
             # - Ambroff 2008-08-20
-            # If the channel is "angstrom-private-"anything, then use the
+            # If the channel is "universe-private-"anything, then use the
             #  private folder for .DS_Store and the background image. -- TS
             template_chan = self.channel_lowerword()
-            if template_chan.startswith("angstrom-private"):
-                template_chan = "angstrom-private"
+            if template_chan.startswith("universe-private"):
+                template_chan = "universe-private"
             dmg_template = os.path.join(
                 'installers', 'darwin', '%s-dmg' % template_chan)
 
@@ -1091,9 +1091,9 @@ class DarwinManifest(ViewerManifest):
 
         #AO: Try to package up symbols
         # New Method, for reading cross platform stack traces on a linux/mac host
-        if (os.path.exists("%s/angstrom-symbols-darwin.tar.bz2" % self.args['configuration'].lower())):
+        if (os.path.exists("%s/universe-symbols-darwin.tar.bz2" % self.args['configuration'].lower())):
             # Rename to add version numbers
-            os.rename("%s/angstrom-symbols-darwin.tar.bz2" % self.args['configuration'].lower(),"%s/%s_%s_symbols-darwin.tar.bz2" % (self.args['configuration'].lower(),substitution_strings['channel_oneword'],substitution_strings['version_dashes']))
+            os.rename("%s/universe-symbols-darwin.tar.bz2" % self.args['configuration'].lower(),"%s/%s_%s_symbols-darwin.tar.bz2" % (self.args['configuration'].lower(),substitution_strings['channel_oneword'],substitution_strings['version_dashes']))
 
 
 
@@ -1103,13 +1103,13 @@ class LinuxManifest(ViewerManifest):
         super(LinuxManifest, self).construct()
         self.path("licenses-linux.txt","licenses.txt")
         self.path("VivoxAUP.txt")
-        self.path("res/angstrom_icon.png","angstrom_icon.png")
+        self.path("res/universe_icon.png","universe_icon.png")
         if self.prefix("linux_tools", dst=""):
             self.path("client-readme.txt","README-linux.txt")
-	    self.path("ANGSTROM_DESKTOPINSTALL.txt","ANGSTROM_DESKTOPINSTALL.txt")
+	    self.path("UNIVERSE_DESKTOPINSTALL.txt","UNIVERSE_DESKTOPINSTALL.txt")
             self.path("client-readme-voice.txt","README-linux-voice.txt")
             self.path("client-readme-joystick.txt","README-linux-joystick.txt")
-            self.path("wrapper.sh","angstrom")
+            self.path("wrapper.sh","universe")
             if self.prefix(src="", dst="etc"):
                 self.path("handle_secondlifeprotocol.sh")
                 self.path("register_secondlifeprotocol.sh")
@@ -1123,7 +1123,7 @@ class LinuxManifest(ViewerManifest):
         self.put_in_file(self.flags_list(), 'etc/gridargs.dat')
 
         if self.prefix(src="", dst="bin"):
-            self.path("angstrom-bin","do-not-directly-run-angstrom-bin")
+            self.path("universe-bin","do-not-directly-run-universe-bin")
             self.path("../linux_crash_logger/linux-crash-logger","linux-crash-logger.bin")
             self.path("../linux_updater/linux-updater", "linux-updater.bin")
             self.path2basename("../llplugin/slplugin", "SLPlugin")
@@ -1138,9 +1138,9 @@ class LinuxManifest(ViewerManifest):
         # Get the icons based on the channel
         icon_path = self.icon_path()
         if self.prefix(src=icon_path, dst="") :
-            self.path("angstrom_256.png","angstrom_48.png")
+            self.path("universe_256.png","universe_48.png")
             if self.prefix(src="",dst="res-sdl") :
-                self.path("angstrom_256.BMP","ll_icon.BMP")
+                self.path("universe_256.BMP","ll_icon.BMP")
                 self.end_prefix("res-sdl")
             self.end_prefix(icon_path)
 
@@ -1158,7 +1158,7 @@ class LinuxManifest(ViewerManifest):
     def copy_finish(self):
         # Force executable permissions to be set for scripts
         # see CHOP-223 and http://mercurial.selenic.com/bts/issue1802
-        for script in 'angstrom', 'bin/update_install':
+        for script in 'universe', 'bin/update_install':
             self.run_command("chmod +x %r" % os.path.join(self.get_dst_prefix(), script))
 
     def package_finish(self):
@@ -1227,9 +1227,9 @@ class LinuxManifest(ViewerManifest):
 
         #AO: Try to package up symbols
         # New Method, for reading cross platform stack traces on a linux/mac host
-        if (os.path.exists("%s/angstrom-symbols-linux.tar.bz2" % self.args['configuration'].lower())):
+        if (os.path.exists("%s/universe-symbols-linux.tar.bz2" % self.args['configuration'].lower())):
             # Rename to add version numbers
-            os.rename("%s/angstrom-symbols-linux.tar.bz2" % self.args['configuration'].lower(),"%s/Phoenix_%s_%s_symbols-linux.tar.bz2" % (self.args['configuration'].lower(),substitution_strings['channel_oneword'],substitution_strings['version_dashes']))
+            os.rename("%s/universe-symbols-linux.tar.bz2" % self.args['configuration'].lower(),"%s/Phoenix_%s_%s_symbols-linux.tar.bz2" % (self.args['configuration'].lower(),substitution_strings['channel_oneword'],substitution_strings['version_dashes']))
 
 
 class Linux_i686Manifest(LinuxManifest):

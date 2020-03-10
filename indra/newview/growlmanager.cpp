@@ -140,7 +140,7 @@ void GrowlManager::loadConfig()
 		}
 		configs.close();
 
-		this->mNotifier->registerApplication("Angstrom Viewer", notificationTypes);
+		this->mNotifier->registerApplication("Universe Viewer", notificationTypes);
 	}
 	else
 	{

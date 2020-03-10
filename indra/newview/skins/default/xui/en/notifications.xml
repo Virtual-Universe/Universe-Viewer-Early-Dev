@@ -9001,10 +9001,10 @@ This will send the following information to the current IM session:
 
   <notification
    icon="alertmodal.tga"
-   name="AngstromReqInfo"
+   name="UniverseReqInfo"
    type="alertmodal">
-    [NAME] is requesting that you send them information about your Angstrom setup.
-    (This is the same information that can be found by going to Help->ABOUT Angstrom)    
+    [NAME] is requesting that you send them information about your Universe Viewer setup.
+    (This is the same information that can be found by going to Help->ABOUT Universe)    
     [REASON]
     Would you like to send them this information?
     <form name="form">
@@ -9041,7 +9041,7 @@ Phantom mode off.
   <notification
     icon="alertmodal.tga"
     label="Reset all settings"
-    name="AngstromClearSettingsPrompt"
+    name="UniverseClearSettingsPrompt"
     type="alertmodal">
     Resetting all settings may be helpful if you are experiencing problems; however, you will need to redo any customizations you have made to the default configuration. 
 
@@ -9251,7 +9251,7 @@ Your viewer cache is currently empty. Please be aware that you may experience sl
    icon="alertmodal.tga"
    name="FirstJoinSupportGroup"
    type="alertmodal">
-Welcome to the Angstrom Viewer Support Group!
+Welcome to the Universe Viewer Support Group!
 
 To make support easier, it is recommended to announce your viewer's version to the group. You can choose to display your viewer's version in front of any chat you send to the group. Our support members can give you more meaningful advice right away if they know the viewer version you are on.
 
@@ -9271,7 +9271,7 @@ Do you want to enable the automatic viewer version display?
        text="No"/>
       <ignore
 	   name="ignore"
-       text="The Angstrom Support Group was joined"
+       text="The Universe Support Group was joined"
        save_option="true" />
     </form>
 
@@ -9445,7 +9445,7 @@ Previous simulator: [OLDVERSION]
   <notification
    name="VintageLoginInfo"
    type="alertmodal">
-Did you know you can get the classic Phoenix Viewer look with Angstrom? Go to the "Default Settings" menu next to the login button and select "Phoenix".
+Did you know you can get the classic Phoenix Viewer look with Universe Viewer? Go to the "Default Settings" menu next to the login button and select "Phoenix".
     <usetemplate
       name="okbutton"
       yestext="OK"/>

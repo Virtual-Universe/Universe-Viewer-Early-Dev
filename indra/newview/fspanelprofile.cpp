@@ -553,7 +553,7 @@ void FSPanelProfile::fillAccountStatus(const LLAvatarData* avatar_data)
     FSDataAgent* agent = FSData::getInstance()->getAgent(avatar_data->avatar_id);
     if (agent)
     {
-        args["[FIRESTORM]"] = "Angstrom";
+        args["[FIRESTORM]"] = "Universe";
         if (agent->developer)
         {
             std::string dev = getString("FSDev");

@@ -42,7 +42,7 @@
         <key>Type</key>
             <string>String</string>
         <key>Value</key>
-            <string>The Resident you messaged has activated Angstrom viewer&apos;s &apos;unavailable mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their IM panel for later viewing.</string>
+            <string>The Resident you messaged has activated Universe viewer&apos;s &apos;unavailable mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their IM panel for later viewing.</string>
         </map>
     <key>FSAutorespondMode</key>
         <map>
@@ -64,7 +64,7 @@
         <key>Type</key>
             <string>String</string>
         <key>Value</key>
-            <string>The Resident you messaged has activated Angstrom viewer&apos;s &apos;autorespond mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their IM panel for later viewing.</string>
+            <string>The Resident you messaged has activated Universe viewer&apos;s &apos;autorespond mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their IM panel for later viewing.</string>
         </map>
     <key>FSAutorespondNonFriendsMode</key>
         <map>
@@ -86,7 +86,7 @@
         <key>Type</key>
             <string>String</string>
         <key>Value</key>
-            <string>The Resident you messaged has activated Angstrom viewer&apos;s &apos;autorespond mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their IM panel for later viewing.</string>
+            <string>The Resident you messaged has activated Universe viewer&apos;s &apos;autorespond mode&apos; which means they have requested not to be disturbed.  Your message will still be shown in their IM panel for later viewing.</string>
         </map>
     <key>FSLSLBridgeUUID</key>
         <map>
@@ -344,7 +344,7 @@
         </map>
     <!-- End of back compatibility settings -->
     
-    <!-- Angstrom settings -->
+    <!-- Universe settings -->
     <key>DebugLookAt</key>
         <map>
         <key>Comment</key>
@@ -517,7 +517,7 @@
 			<real>1.0</real>
 		</array>
 	</map>
-	<key>AngstromTagColor</key>
+	<key>UniverseTagColor</key>
 	<map>
 	    <key>Comment</key>
 	    <string>The tag color you wish to have.</string>
@@ -544,7 +544,7 @@
 		<key>Value</key>
 			<string>0</string>
 	</map>
-    <!-- End of Angstrom settings -->
+    <!-- End of Universe settings -->
 
     <!-- Settings imported from Exodus -->
     <key>ExodusFlickrToken</key>

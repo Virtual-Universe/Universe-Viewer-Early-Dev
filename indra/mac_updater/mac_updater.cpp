@@ -355,7 +355,7 @@ int parse_args(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	// We assume that all the logs we're looking for reside on the current drive
-	gDirUtilp->initAppDirs("Angstrom");
+	gDirUtilp->initAppDirs("Universe");
 
 	LLError::initForApplication( gDirUtilp->getExpandedFilename(LL_PATH_APP_SETTINGS, ""));
 
@@ -391,7 +391,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			gProductName = "Angstrom";
+			gProductName = "Universe";
 		}
 	}
 	
@@ -484,7 +484,7 @@ int main(int argc, char **argv)
 		err = CreateStandardAlert(
 				kAlertStopAlert,
 				CFSTR("Error"),
-				CFSTR("An error occurred while updating Angstrom.  Please download the latest version from www.phoenixviewer.com."),
+				CFSTR("An error occurred while updating Universe Viewer.  Please download the latest version from www.virtual-planets.org."),
 				&params,
 				&alert);
 		
@@ -958,7 +958,7 @@ void *updatethreadproc(void*)
 		}
 
 		
-		strncat(temp, "/AngstromUpdate_XXXXXX", (sizeof(temp) - strlen(temp)) - 1);
+		strncat(temp, "/UniverseUpdate_XXXXXX", (sizeof(temp) - strlen(temp)) - 1);
 		if(mkdtemp(temp) == NULL)
 		{
 			throw 0;
@@ -976,7 +976,7 @@ void *updatethreadproc(void*)
 				
 		chdir(tempDir);
 		
-		snprintf(temp, sizeof(temp), "Angstrom.dmg");		
+		snprintf(temp, sizeof(temp), "Universe.dmg");		
 		
 		downloadFile = LLFile::fopen(temp, "wb");		/* Flawfinder: ignore */
 		if(downloadFile == NULL)

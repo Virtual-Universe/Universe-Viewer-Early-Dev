@@ -15,7 +15,7 @@
 </panel.string>
 <panel.string
      name="real_url" translate="false">
-  https://bitbucket.org/nhede/angstrom/wiki/Home/
+  https://wiki.virtual-planets.org/Home/
 </panel.string>
     <string name="reg_in_client_url" translate="false">
      http://secondlife.eniac15.lindenlab.com/reg-in-client/
@@ -150,9 +150,9 @@ label="Remember password"
     name="mode_combo"
     width="110">
     <combo_box.item
-      label="Angstrom"
-      name="Angstrom"
-      value="settings_angstrom.xml" />
+      label="Universe"
+      name="Universe"
+      value="settings_universe.xml" />
     <combo_box.item
       label="Phoenix"
       name="Phoenix"

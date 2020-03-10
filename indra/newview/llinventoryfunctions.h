@@ -33,7 +33,7 @@
 #include "llwearabletype.h"
 
 //-TT - Firestorm folder name for use by AO, bridge and possibly others
-#define ROOT_FIRESTORM_FOLDER 	"#Angstrom"
+#define ROOT_FIRESTORM_FOLDER 	"#Universe"
 //-TT
 
 /********************************************************************************

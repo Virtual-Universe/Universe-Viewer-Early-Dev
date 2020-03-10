@@ -38,7 +38,7 @@
   <key>FSPublishRadarTag</key>
   <map>
     <key>Comment</key>
-    <string>Enables the publishing of a 'Angstrom' radar tag, as well as the display of published radar tags of other avatars.</string>
+    <string>Enables the publishing of a 'Universe' radar tag, as well as the display of published radar tags of other avatars.</string>
     <key>Persist</key>
     <integer>1</integer>
     <key>Type</key>
@@ -162,7 +162,7 @@
     <key>Type</key>
     <string>String</string>
     <key>Value</key>
-    <string>https://bitbucket.org/nhede/angstrom_files/downloads/grids.xml</string>
+    <string>https://virtual-planets.org/universe_files/downloads/grids.xml</string>
   </map>
   <key>LastConnectedGrid</key>
   <map>
@@ -5970,7 +5970,7 @@
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>https://bitbucket.org/nhede/angstrom2/wiki/[TOPIC]</string>
+      <string>https://wiki.virtual-planets.org/[TOPIC]</string>
       <key>Backup</key>
       <integer>0</integer>
     </map>
@@ -5983,7 +5983,7 @@
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>https://bitbucket.org/nhede/angstrom2/wiki/Home</string>
+      <string>https://wiki.virtual-planets.org/Home</string>
       <key>Backup</key>
       <integer>0</integer>
     </map>    
@@ -6014,7 +6014,7 @@
       <integer>0</integer>
       <!-- LL, possibly privacy leaking search string 
 	  <string>http://search.secondlife.com/viewer/[CATEGORY]/?q=[QUERY]&amp;p=[AUTH_TOKEN]&amp;r=[MATURITY]&amp;lang=[LANGUAGE]&amp;g=[GODLIKE]&amp;sid=[SESSION_ID]&amp;rid=[REGION_ID]&amp;pid=[PARCEL_ID]&amp;channel=[CHANNEL]&amp;version=[VERSION]&amp;major=[VERSION_MAJOR]&amp;minor=[VERSION_MINOR]&amp;patch=[VERSION_PATCH]&amp;build=[VERSION_BUILD]</string>
-	  -->
+	  --> 
     </map>
     <key>WebProfileURL</key>
     <map>
@@ -12936,7 +12936,7 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>angstrom</string>
+      <string>universe</string>
     </map>
     <key>SkinningSettingsFile</key>
     <map>
@@ -14977,7 +14977,7 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>https://bitbucket.org/nhede/angstrom2/downloads</string>
+      <string>https://virtual-planets.org/downloads</string>
     </map>
     <key>UpdaterServicePath</key>
     <map>
@@ -17411,7 +17411,7 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>https://bitbucket.org/nhede/angstrom_files/downloads/404.html</string>
+      <string>https://virtual-planets.org/universe_files/404.html</string>
       <key>Backup</key>
       <integer>0</integer>
     </map>
@@ -17429,7 +17429,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>NearbyListShowMap</key>
     <map>
       <key>Comment</key>
-      <string>Show/hide map above nearby people list (unused by angstrom)</string>
+      <string>Show/hide map above nearby people list (unused by Universe Viewer)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>

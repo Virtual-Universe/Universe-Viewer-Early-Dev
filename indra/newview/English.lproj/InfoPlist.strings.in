@@ -1,7 +1,7 @@
 /* Localized versions of Info.plist keys */
 
-CFBundleName = "Angstrom";
+CFBundleName = "Universe";
 
-CFBundleShortVersionString = "Angstrom version 3.0.1.22450";
-CFBundleGetInfoString = "Angstrom version 3.0.1.22450, Copyright 2010-2011 The Angstrom Viewer Project, Inc.";
+CFBundleShortVersionString = "Universe version 3.0.1.22450";
+CFBundleGetInfoString = "Universe version 3.0.1.22450, Copyright 2020-2028 Virtual World Research, Inc.";
 

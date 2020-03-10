@@ -58,13 +58,10 @@
 #include "lltrans.h"
 
 static const std::string versionid = llformat("%s %d.%d.%d (%d)", LL_CHANNEL, LL_VERSION_MAJOR, LL_VERSION_MINOR, LL_VERSION_PATCH, LL_VERSION_BUILD);
-static const std::string fsdata_url = "https://bitbucket.org/nhede/angstrom_files/downloads/data.xml";
-static const std::string releases_url = "https://bitbucket.org/nhede/angstrom_files/downloads/releases.xml";
-static const std::string agents_url = "https://bitbucket.org/nhede/angstrom_files/downloads/agents.xml";
-static const std::string legacy_client_list = "https://bitbucket.org/nhede/angstrom_files/downloads/client_list_v2.xml";
-
-//static const std::string blacklist_url = "http://notworking.com/app/fsdata/blacklist.xml";
-
+static const std::string fsdata_url = "https://virtual-planets.org/universe_files/data.xml";
+static const std::string releases_url = "https://virtual-planets.org/universe_files/releases.xml";
+static const std::string agents_url = "https://virtual-planets.org/universe_files/agents.xml";
+static const std::string legacy_client_list = "https://virtual-planets.org/universe_files/client_list_v2.xml";
 
 class FSDownloader : public LLHTTPClient::Responder
 {
@@ -241,7 +238,7 @@ void FSData::processReleases(const LLSD& releases)
 
 void FSData::processReleasesLLSD(const LLSD& releases)
 {
-	const LLSD& fs_versions = releases["AngstromReleases"];
+	const LLSD& fs_versions = releases["UniverseReleases"];
 	versions2.clear();
 	for(LLSD::map_const_iterator itr = fs_versions.beginMap(); itr != fs_versions.endMap(); ++itr)
 	{
@@ -642,7 +639,7 @@ std::string FSData::processRequestForInfo(LLUUID requester, std::string message,
 	args["NAME"] = name;
 	args["FROMUUID"] = requester;
 	args["SESSIONID"] = sessionid;
-	LLNotifications::instance().add("AngstromReqInfo", args, LLSD(), callbackReqInfo);
+	LLNotifications::instance().add("UniverseReqInfo", args, LLSD(), callbackReqInfo);
 
 	return outmessage;
 }

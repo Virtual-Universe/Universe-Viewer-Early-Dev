@@ -490,7 +490,7 @@ bool LLCrashLogger::sendCrashLogs()
 //															   "SecondLifeCrashReport");
 // [SL:KB] - Patch: Viewer-CrashReporting | Checked: 2010-11-14 (Catznip-2.6.0a) | Added: Catznip-2.4.0a
 	std::string dump_path = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-															   "AngstromCrashReport");
+															   "UniverseCrashReport");
 // [/SL:KB]
 	std::string report_file = dump_path + ".log";
 
@@ -555,7 +555,7 @@ bool LLCrashLogger::init()
 	LLCurl::initClass(false);
 
 	// We assume that all the logs we're looking for reside on the current drive
-	gDirUtilp->initAppDirs("Angstrom");
+	gDirUtilp->initAppDirs("Universe");
 
 	LLError::initForApplication(gDirUtilp->getExpandedFilename(LL_PATH_APP_SETTINGS, ""));
 
@@ -563,7 +563,7 @@ bool LLCrashLogger::init()
 	
 	// <FS:ND> Change default to Firestorm
 	//	mProductName = "Second Life";
-	mProductName = "Angstrom";
+	mProductName = "Universe";
 	// </FS:ND>
 
 	// Rename current log file to ".old"

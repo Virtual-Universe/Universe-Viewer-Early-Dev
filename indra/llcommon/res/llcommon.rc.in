@@ -40,13 +40,13 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "Angstrom Viewer"
-            VALUE "FileDescription", "Angstrom Viewer Common Library"
+            VALUE "CompanyName", "Universe Viewer"
+            VALUE "FileDescription", "Universe Viewer Common Library"
             VALUE "FileVersion", "2.6.1.18383"
             VALUE "InternalName", "llcommon.dll"
-            VALUE "LegalCopyright", "Copyright © 2010 Angstrom Viewer"
+            VALUE "LegalCopyright", "Copyright © 2020 Virtual World Research Inc."
             VALUE "OriginalFilename", "llcommon.dll"
-            VALUE "ProductName", "Angstrom Viewer"
+            VALUE "ProductName", "Universe Viewer"
             VALUE "ProductVersion", "2.6.1.18383"
         END
     END

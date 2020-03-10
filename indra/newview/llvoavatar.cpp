@@ -3242,7 +3242,7 @@ void LLVOAvatar::idleUpdateNameTagText(BOOL new_name)
 	static LLCachedControl<bool> fsShowOwnTagColor(gSavedSettings, "FSShowOwnTagColor");
 	if (isSelf() && fsShowOwnTagColor)
 	{
-		static LLCachedControl<LLColor4> firestormTagColor(gSavedPerAccountSettings, "AngstromTagColor");
+		static LLCachedControl<LLColor4> firestormTagColor(gSavedPerAccountSettings, "UniverseTagColor");
 		name_tag_color = firestormTagColor;
 	}
 

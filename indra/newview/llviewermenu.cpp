@@ -6528,8 +6528,8 @@ void show_v1_menus()	// V1 menu system	-WoLf
 		gMenuBarView->setItemEnabled("V1-Tools", V1);
 		gMenuBarView->setItemVisible("V1-Help", V1);
 		gMenuBarView->setItemEnabled("V1-Help", V1);
-		gMenuBarView->setItemVisible("V1-Angstrom", V1);
-		gMenuBarView->setItemEnabled("V1-Angstrom", V1);
+		gMenuBarView->setItemVisible("V1-Universe", V1);
+		gMenuBarView->setItemEnabled("V1-Universe", V1);
 		gMenuBarView->setItemVisible("V1-Advanced", V1);
 		gMenuBarView->setItemEnabled("V1-Advanced", V1);
 

@@ -568,7 +568,7 @@
               <key>hash</key>
               <string>af385c820711c4cfd2e64e6cfc2cbf53</string>
               <key>url</key>
-              <string>https://bitbucket.org/nhede/angstrom_files/downloads/fmod-3.75-windows-20120316.tar.bz2</string>
+              <string>https://virtual-planets.org/universe_files/downloads/fmod-3.75-windows-20120316.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -1728,7 +1728,7 @@
               <key>hash</key>
               <string>0bb1420598df67e78b096a6df78f5e49</string>
               <key>url</key>
-              <string>https://bitbucket.org/nhede/angstrom_files/downloads/openjpeg-1.4-windows-kc-20120407.tar.bz2</string>
+              <string>https://virtual-planets.org/universe_files/downloads/openjpeg-1.4-windows-kc-20120407.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -2862,7 +2862,7 @@
                   <string>--config</string>
                   <string>Debug</string>
                   <string>--startup</string>
-                  <string>angstrom-bin</string>
+                  <string>universe-bin</string>
                 </array>
                 <key>options</key>
                 <array>
@@ -2948,7 +2948,7 @@
                   <string>--config</string>
                   <string>RelWithDebInfo</string>
                   <string>--startup</string>
-                  <string>angstrom-bin</string>
+                  <string>universe-bin</string>
                 </array>
                 <key>options</key>
                 <array>
@@ -2967,7 +2967,7 @@
               <map>
                 <key>arguments</key>
                 <array>
-                  <string>Angstrom.sln</string>
+                  <string>Universe.sln</string>
                 </array>
                 <key>command</key>
                 <string>msbuild.exe</string>
@@ -3004,15 +3004,15 @@
               <map>
                 <key>arguments</key>
                 <array>
-                  <string>Angstrom.sln</string>
+                  <string>Universe.sln</string>
                 </array>
                 <key>command</key>
                 <string>msbuild.exe</string>
                 <key>options</key>
                 <array>
                   <string>/p:Configuration=RelWithDebInfo</string>
-                  <string>/flp:LogFile=logs\AngstromBuild_win32.log</string>
-                  <string>/flp1:errorsonly;LogFile=logs\AngstromBuild_win32.err</string>
+                  <string>/flp:LogFile=logs\UniverseBuild_win32.log</string>
+                  <string>/flp1:errorsonly;LogFile=logs\UniverseBuild_win32.err</string>
                   <string>/p:Platform=Win32</string>
                   <string>/t:Build</string>
                   <string>/p:useenv=true</string>
@@ -3110,7 +3110,7 @@
                   <string>--config</string>
                   <string>Release</string>
                   <string>--startup</string>
-                  <string>angstrom-bin</string>
+                  <string>universe-bin</string>
                 </array>
                 <key>options</key>
                 <array>
@@ -3127,15 +3127,15 @@
               <map>
                 <key>arguments</key>
                 <array>
-                  <string>Angstrom.sln</string>
+                  <string>Universe.sln</string>
                 </array>
                 <key>command</key>
                 <string>msbuild.exe</string>
                 <key>options</key>
                 <array>
                   <string>/p:Configuration=Release</string>
-                  <string>/flp:LogFile=logs\AngstromBuild_win32.log</string>
-                  <string>/flp1:errorsonly;LogFile=logs\AngstromBuild_win32.err</string>
+                  <string>/flp:LogFile=logs\UniverseBuild_win32.log</string>
+                  <string>/flp1:errorsonly;LogFile=logs\UniverseBuild_win32.err</string>
                   <string>/p:Platform=Win32</string>
                   <string>/t:Build</string>
                   <string>/p:useenv=true</string>
@@ -3164,7 +3164,7 @@
               <map>
                 <key>arguments</key>
                 <array>
-                  <string>Angstrom.sln</string>
+                  <string>Universe.sln</string>
                 </array>
                 <key>command</key>
                 <string>msbuild.exe</string>
@@ -3201,7 +3201,7 @@
               <map>
                 <key>arguments</key>
                 <array>
-                  <string>Angstrom.sln</string>
+                  <string>Universe.sln</string>
                 </array>
                 <key>command</key>
                 <string>msbuild.exe</string>

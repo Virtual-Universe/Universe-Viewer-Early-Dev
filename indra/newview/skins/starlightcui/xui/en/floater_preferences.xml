@@ -167,12 +167,12 @@
          help_topic="preferences_crashreports_tab"
          name="crashreports" />
         <panel
-         class="panel_preference_angstrom"
-         filename="panel_preferences_angstrom.xml"
-         label="Angstrom"
+         class="panel_preference_universe"
+         filename="panel_preferences_universe.xml"
+         label="Universe"
          layout="topleft"
-         help_topic="preferences_angstrom_tab"
-         name="angstrom" />
+         help_topic="preferences_universe_tab"
+         name="universe" />
         <panel
          class="panel_preference_opensim"
          filename="panel_preferences_opensim.xml"

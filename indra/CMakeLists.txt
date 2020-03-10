@@ -130,7 +130,7 @@ if (VIEWER)
   endif (LINUX)
 
   add_subdirectory(${VIEWER_PREFIX}newview)
-  add_dependencies(viewer angstrom-bin)
+  add_dependencies(viewer universe-bin)
 endif (VIEWER)
 
 # Linux builds the viewer and server in 2 separate projects

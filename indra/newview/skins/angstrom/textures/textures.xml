@@ -76,8 +76,8 @@
 	<texture name="Inv_FolderOpen"			file_name="legacy/inv_folder_plain_open.tga" />
 
 	<!-- Firstorm virtual system folders -->
-	<texture name="Inv_AngstromOpen"		file_name="legacy/inv_folder_plain_open.tga" />
-	<texture name="Inv_AngstromClosed"		file_name="legacy/inv_folder_plain_closed.tga" />
+	<texture name="Inv_UniverseOpen"		file_name="legacy/inv_folder_plain_open.tga" />
+	<texture name="Inv_UniverseClosed"		file_name="legacy/inv_folder_plain_closed.tga" />
 	<texture name="Inv_PhoenixOpen"			file_name="legacy/inv_folder_plain_open.tga" />
 	<texture name="Inv_PhoenixClosed"		file_name="legacy/inv_folder_plain_closed.tga" />
 	<texture name="Inv_RLVOpen"			file_name="legacy/inv_folder_RLVa.tga" />
